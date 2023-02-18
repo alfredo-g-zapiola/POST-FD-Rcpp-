@@ -1,0 +1,16 @@
+Package: FdPot
+Type: Package
+Title: Functional Data Penalised Optimal (decision) Trees
+Version: 1.0
+Date: 2022-07-29
+Author: Alfredo Gimenez Zapiola
+Maintainer: Alfredo Gimenez Zapiola <alfredo.gzapiola@libero.it>
+Description: More about what it does (maybe more than one line)
+License: What license is it under?
+Encoding: UTF-8
+Imports: Rcpp (>= 1.0.8)
+Depends: fda
+Enhances: fda
+LinkingTo: Rcpp, RcppArmadillo, splines2
+SystemRequirements: GNU make
+RoxygenNote: 7.2.3
