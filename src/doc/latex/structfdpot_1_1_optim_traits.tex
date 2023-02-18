@@ -1,0 +1,86 @@
+\hypertarget{structfdpot_1_1_optim_traits}{}\doxysection{fdpot\+::Optim\+Traits Struct Reference}
+\label{structfdpot_1_1_optim_traits}\index{fdpot::OptimTraits@{fdpot::OptimTraits}}
+
+
+Keeps the types for optimisation.  
+
+
+
+
+{\ttfamily \#include $<$Optim\+Handler.\+h$>$}
+
+
+
+Inheritance diagram for fdpot\+::Optim\+Traits\+:
+% FIG 0
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{structfdpot_1_1_optim_traits_a8e397c4670fe0ad2c621c32ba15abbf5}{ADvector}} = std\+::vector$<$ AD$<$ double $>$ $>$
+\begin{DoxyCompactList}\small\item\em ADvector\+: the type of vector supported by Cpp\+AD. \end{DoxyCompactList}\item 
+using \mbox{\hyperlink{structfdpot_1_1_optim_traits_a9f09b5099d705f7ee80a65317d87e68b}{Optim\+Funs}} = std\+::function$<$ void(\mbox{\hyperlink{structfdpot_1_1_optim_traits_a8e397c4670fe0ad2c621c32ba15abbf5}{ADvector}} \&fg, const \mbox{\hyperlink{structfdpot_1_1_optim_traits_a8e397c4670fe0ad2c621c32ba15abbf5}{ADvector}} \&x)$>$
+\begin{DoxyCompactList}\small\item\em Optim\+Funs\+: the type to hold optimisation functions. \end{DoxyCompactList}\item 
+using \mbox{\hyperlink{structfdpot_1_1_optim_traits_a7d43e2009f8fa8c83d48d7994b90e5c6}{Dvector}} = arma\+::vec
+\begin{DoxyCompactList}\small\item\em Dvector\+: the vector that will hold the variables changed during optimisation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Keeps the types for optimisation. 
+
+\begin{DoxyNote}{Note}
+See \href{https://www.coin-or.org/CppAD/Doc/ipopt_solve.htm}{\texttt{ https\+://www.\+coin-\/or.\+org/\+Cpp\+AD/\+Doc/ipopt\+\_\+solve.\+htm}} 
+\end{DoxyNote}
+
+
+Definition at line \mbox{\hyperlink{_optim_handler_8h_source_l00019}{19}} of file \mbox{\hyperlink{_optim_handler_8h_source}{Optim\+Handler.\+h}}.
+
+
+
+\doxysubsection{Member Typedef Documentation}
+\mbox{\Hypertarget{structfdpot_1_1_optim_traits_a8e397c4670fe0ad2c621c32ba15abbf5}\label{structfdpot_1_1_optim_traits_a8e397c4670fe0ad2c621c32ba15abbf5}} 
+\index{fdpot::OptimTraits@{fdpot::OptimTraits}!ADvector@{ADvector}}
+\index{ADvector@{ADvector}!fdpot::OptimTraits@{fdpot::OptimTraits}}
+\doxysubsubsection{\texorpdfstring{ADvector}{ADvector}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{structfdpot_1_1_optim_traits_a8e397c4670fe0ad2c621c32ba15abbf5}{fdpot\+::\+Optim\+Traits\+::\+ADvector}} =  std\+::vector$<$AD$<$double$>$ $>$}
+
+
+
+ADvector\+: the type of vector supported by Cpp\+AD. 
+
+
+
+Definition at line \mbox{\hyperlink{_optim_handler_8h_source_l00022}{22}} of file \mbox{\hyperlink{_optim_handler_8h_source}{Optim\+Handler.\+h}}.
+
+\mbox{\Hypertarget{structfdpot_1_1_optim_traits_a7d43e2009f8fa8c83d48d7994b90e5c6}\label{structfdpot_1_1_optim_traits_a7d43e2009f8fa8c83d48d7994b90e5c6}} 
+\index{fdpot::OptimTraits@{fdpot::OptimTraits}!Dvector@{Dvector}}
+\index{Dvector@{Dvector}!fdpot::OptimTraits@{fdpot::OptimTraits}}
+\doxysubsubsection{\texorpdfstring{Dvector}{Dvector}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{structfdpot_1_1_optim_traits_a7d43e2009f8fa8c83d48d7994b90e5c6}{fdpot\+::\+Optim\+Traits\+::\+Dvector}} =  arma\+::vec}
+
+
+
+Dvector\+: the vector that will hold the variables changed during optimisation. 
+
+
+
+Definition at line \mbox{\hyperlink{_optim_handler_8h_source_l00028}{28}} of file \mbox{\hyperlink{_optim_handler_8h_source}{Optim\+Handler.\+h}}.
+
+\mbox{\Hypertarget{structfdpot_1_1_optim_traits_a9f09b5099d705f7ee80a65317d87e68b}\label{structfdpot_1_1_optim_traits_a9f09b5099d705f7ee80a65317d87e68b}} 
+\index{fdpot::OptimTraits@{fdpot::OptimTraits}!OptimFuns@{OptimFuns}}
+\index{OptimFuns@{OptimFuns}!fdpot::OptimTraits@{fdpot::OptimTraits}}
+\doxysubsubsection{\texorpdfstring{OptimFuns}{OptimFuns}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{structfdpot_1_1_optim_traits_a9f09b5099d705f7ee80a65317d87e68b}{fdpot\+::\+Optim\+Traits\+::\+Optim\+Funs}} =  std\+::function$<$void(\mbox{\hyperlink{structfdpot_1_1_optim_traits_a8e397c4670fe0ad2c621c32ba15abbf5}{ADvector}}\& fg, const \mbox{\hyperlink{structfdpot_1_1_optim_traits_a8e397c4670fe0ad2c621c32ba15abbf5}{ADvector}}\& x)$>$}
+
+
+
+Optim\+Funs\+: the type to hold optimisation functions. 
+
+wrapper for function pointer 
+
+Definition at line \mbox{\hyperlink{_optim_handler_8h_source_l00025}{25}} of file \mbox{\hyperlink{_optim_handler_8h_source}{Optim\+Handler.\+h}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_optim_handler_8h}{Optim\+Handler.\+h}}\end{DoxyCompactItemize}

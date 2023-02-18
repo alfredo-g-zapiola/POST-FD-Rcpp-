@@ -1,0 +1,91 @@
+\hypertarget{_fd_pot_8h_source}{}\doxysection{Fd\+Pot.\+h}
+\mbox{\hyperlink{_fd_pot_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00001}00001 \textcolor{preprocessor}{\#ifndef p\_fdorct}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00002}00002 \textcolor{preprocessor}{\#define p\_fdorct}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00003}00003  \textcolor{comment}{// TODO size\_t}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00004}00004  \textcolor{comment}{// class enum similarity method}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00005}00005  \textcolor{comment}{// TODO documentation (doxygen)s}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00006}00006 \textcolor{preprocessor}{\#include <cmath>}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00007}00007 \textcolor{preprocessor}{\#include <tuple>}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00008}00008 \textcolor{preprocessor}{\#include <random>}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00009}00009  }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00010}00010 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_basis_obj_8h}{BasisObj.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00011}00011 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_optim_handler_8h}{OptimHandler.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00012}00012 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_o_r_c_t_8h}{ORCT.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00013}00013 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{helpers_8h}{helpers.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00014}00014 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_fd_pot_support_8h}{FdPotSupport.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00015}00015 \textcolor{preprocessor}{\#include "{}dirichlet.h"{}}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00016}00016  }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00017}\mbox{\hyperlink{namespacefdpot}{00017}}  \textcolor{keyword}{namespace }\mbox{\hyperlink{namespacefdpot}{fdpot}}\{}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00018}00018  \textcolor{comment}{// add the specialisation for ADdouble (we may need ORCT in another context)}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00020}00020  }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00021}00021  }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00022}00022 }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00023}\mbox{\hyperlink{classfdpot_1_1_fd_pot}{00023}} \textcolor{keyword}{class }\mbox{\hyperlink{classfdpot_1_1_fd_pot}{FdPot}}: \textcolor{keyword}{public} \mbox{\hyperlink{structfdpot_1_1_optim_traits}{OptimTraits}}\{}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00024}00024 \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00025}\mbox{\hyperlink{classfdpot_1_1_fd_pot_af7ffe5ac1e4b0f629e351db1838abc3a}{00025}}     \mbox{\hyperlink{classfdpot_1_1_fd_pot_af7ffe5ac1e4b0f629e351db1838abc3a}{FdPot}}(splines2::BSpline\&\& basis\_,}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00026}00026           \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} n\_labels,}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00027}00027           \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} n\_samples\_,}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00028}00028           \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} n\_feats,}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00029}00029           \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} depth\_,}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00030}00030           \textcolor{keyword}{const} \textcolor{keywordtype}{double} alpha\_,}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00031}00031           \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \textcolor{keywordtype}{int} seed\_ = 22200337,}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00032}00032           \textcolor{keyword}{const} \textcolor{keywordtype}{double} gamma\_=512) : }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00033}00033     \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}\{std::make\_unique<\mbox{\hyperlink{structfdpot_1_1_o_r_c_t}{ORCT}}>(depth\_, n\_feats, n\_labels, gamma\_)\},}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00034}00034     \mbox{\hyperlink{classfdpot_1_1_fd_pot_ac75a6174e4924b81a147941e2715cd63}{evalFd}}\{std::move(basis\_)\},}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00035}00035     \mbox{\hyperlink{classfdpot_1_1_fd_pot_a591ec614105ae21dda750c3ccc9b44bb}{n\_samples}}(n\_samples\_),}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00036}00036     \mbox{\hyperlink{classfdpot_1_1_fd_pot_a4afa7a62e703989f6d79f0eeaf53e16e}{alpha}}\{alpha\_\}, }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00037}00037     \mbox{\hyperlink{classfdpot_1_1_fd_pot_ae79cda7726fcef91de1b5b2a97f31eed}{seed}}\{seed\_\}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00038}00038     \{\};}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00039}00039     }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00040}00040     Rcpp::List \mbox{\hyperlink{classfdpot_1_1_fd_pot_ac8f2601431994ad7f973d799d0c8daa2}{fit}}(\textcolor{keyword}{const} arma::vec\& y, \textcolor{keyword}{const} arma::mat\& X\_coeff, \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \mbox{\hyperlink{classfdpot_1_1_fd_pot_a246ab6b0510387d904ef3e9bdd8d615e}{n\_sols}} = 20);}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00041}00041     }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00043}00043   }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00044}00044   \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00045}\mbox{\hyperlink{classfdpot_1_1_fd_pot_ac75a6174e4924b81a147941e2715cd63}{00045}}     \mbox{\hyperlink{class_fd_handler}{FdHandler<BasisEnum::BSPLINE>}} \mbox{\hyperlink{classfdpot_1_1_fd_pot_ac75a6174e4924b81a147941e2715cd63}{evalFd}};  \textcolor{comment}{// bridge to value functional data.}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00046}\mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{00046}}     std::unique\_ptr<ORCT> \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00047}\mbox{\hyperlink{classfdpot_1_1_fd_pot_ac767b3f7803b53bb30f95a4d8c386744}{00047}}     std::unique\_ptr<OptimHandler> \mbox{\hyperlink{classfdpot_1_1_fd_pot_ac767b3f7803b53bb30f95a4d8c386744}{optimiser}} = std::make\_unique<OptimHandler>();}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00048}00048     }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00049}\mbox{\hyperlink{classfdpot_1_1_fd_pot_a7181ba733b0839596f0880e3d6eb3754}{00049}}     std::pair<unsigned, unsigned> \mbox{\hyperlink{classfdpot_1_1_fd_pot_a7181ba733b0839596f0880e3d6eb3754}{n\_constrs}} = std::make\_pair(0,0); \textcolor{comment}{// TODO}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00050}\mbox{\hyperlink{classfdpot_1_1_fd_pot_ae79cda7726fcef91de1b5b2a97f31eed}{00050}}     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \mbox{\hyperlink{classfdpot_1_1_fd_pot_ae79cda7726fcef91de1b5b2a97f31eed}{seed}} = 100ul;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00051}\mbox{\hyperlink{classfdpot_1_1_fd_pot_a4afa7a62e703989f6d79f0eeaf53e16e}{00051}}     \textcolor{keywordtype}{double} \mbox{\hyperlink{classfdpot_1_1_fd_pot_a4afa7a62e703989f6d79f0eeaf53e16e}{alpha}};}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00052}\mbox{\hyperlink{classfdpot_1_1_fd_pot_a246ab6b0510387d904ef3e9bdd8d615e}{00052}}     \textcolor{keywordtype}{unsigned} \mbox{\hyperlink{classfdpot_1_1_fd_pot_a246ab6b0510387d904ef3e9bdd8d615e}{n\_sols}} = 0u;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00053}\mbox{\hyperlink{classfdpot_1_1_fd_pot_a6a56279161c429c362a51b1caf5b555d}{00053}}     \textcolor{keywordtype}{double} \mbox{\hyperlink{classfdpot_1_1_fd_pot_a6a56279161c429c362a51b1caf5b555d}{missclaf\_cost}}\{0.5\}; \textcolor{comment}{// misclassification cost, this number was used in the experiments by Blaquero et al.}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00054}\mbox{\hyperlink{classfdpot_1_1_fd_pot_a591ec614105ae21dda750c3ccc9b44bb}{00054}}     \textcolor{keywordtype}{unsigned} \mbox{\hyperlink{classfdpot_1_1_fd_pot_a591ec614105ae21dda750c3ccc9b44bb}{n\_samples}} = 0u;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00055}00055     \textcolor{comment}{// 1Rcpp::String similarity\_method; // TODO.}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00057}\mbox{\hyperlink{classfdpot_1_1_fd_pot_a53654c0d60a36def04c42c1650330496}{00057}} \textcolor{comment}{}    arma::mat \mbox{\hyperlink{classfdpot_1_1_fd_pot_a53654c0d60a36def04c42c1650330496}{dissim\_matrix}};}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00058}\mbox{\hyperlink{classfdpot_1_1_fd_pot_a5972d5786052dbc096f1207d34c1b913}{00058}}     arma::mat \mbox{\hyperlink{classfdpot_1_1_fd_pot_a5972d5786052dbc096f1207d34c1b913}{features}};}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00059}00059   }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00060}\mbox{\hyperlink{classfdpot_1_1_fd_pot_a36359a8c660768ff2bfc6cf64e26ceac}{00060}}     std::function<\mbox{\hyperlink{namespacefdpot_ac947a7ce1fadb857ee1bd012d021d578}{ADdouble}} (\textcolor{keyword}{const} \mbox{\hyperlink{structfdpot_1_1_optim_traits_a8e397c4670fe0ad2c621c32ba15abbf5}{OptimTraits::ADvector}} \&)> \mbox{\hyperlink{classfdpot_1_1_fd_pot_a36359a8c660768ff2bfc6cf64e26ceac}{cost\_func}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00061}\mbox{\hyperlink{classfdpot_1_1_fd_pot_adc733950b91e2db7801846e6963e5827}{00061}}     std::function<\mbox{\hyperlink{namespacefdpot_ac947a7ce1fadb857ee1bd012d021d578}{ADdouble}}(\textcolor{keyword}{const} \mbox{\hyperlink{structfdpot_1_1_optim_traits_a8e397c4670fe0ad2c621c32ba15abbf5}{OptimTraits::ADvector}}\&)> \mbox{\hyperlink{classfdpot_1_1_fd_pot_adc733950b91e2db7801846e6963e5827}{penalty\_func}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00062}\mbox{\hyperlink{classfdpot_1_1_fd_pot_a1a7a385a86bdf07f882c4d1d513517bf}{00062}}     std::function<\mbox{\hyperlink{namespacefdpot_ac947a7ce1fadb857ee1bd012d021d578}{ADdouble}}(\textcolor{keyword}{const} \mbox{\hyperlink{structfdpot_1_1_optim_traits_a8e397c4670fe0ad2c621c32ba15abbf5}{OptimTraits::ADvector}}\& vars)> \mbox{\hyperlink{classfdpot_1_1_fd_pot_a1a7a385a86bdf07f882c4d1d513517bf}{obj\_function}} = [\textcolor{keyword}{this}](\textcolor{keyword}{const} \mbox{\hyperlink{structfdpot_1_1_optim_traits_a8e397c4670fe0ad2c621c32ba15abbf5}{OptimTraits::ADvector}}\& vars) -\/> \mbox{\hyperlink{namespacefdpot_ac947a7ce1fadb857ee1bd012d021d578}{ADdouble}}\{}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00063}00063       \textcolor{keywordflow}{return} this-\/>\mbox{\hyperlink{classfdpot_1_1_fd_pot_a36359a8c660768ff2bfc6cf64e26ceac}{cost\_func}}(vars) + this-\/>alpha * this-\/>\mbox{\hyperlink{classfdpot_1_1_fd_pot_adc733950b91e2db7801846e6963e5827}{penalty\_func}}(vars);}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00064}00064     \};}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00065}00065     }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00066}00066     }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00068}00068     }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00069}00069     Rcpp::List \mbox{\hyperlink{classfdpot_1_1_fd_pot_a962a7d85da79db2fd55f6fd29ff033b0}{solve\_trees}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00070}\mbox{\hyperlink{classfdpot_1_1_fd_pot_a72b71236a05c441fc98af8c1c5299036}{00070}}     \textcolor{keywordtype}{void} \mbox{\hyperlink{classfdpot_1_1_fd_pot_a72b71236a05c441fc98af8c1c5299036}{scale\_data}}(\textcolor{keywordtype}{void})\{\};}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00071}00071   }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00072}\mbox{\hyperlink{classfdpot_1_1_fd_pot_a2530552134aa3ca06f998cb0d561a86f}{00072}}     \textcolor{keyword}{inline} \textcolor{keywordtype}{double} \mbox{\hyperlink{classfdpot_1_1_fd_pot_a2530552134aa3ca06f998cb0d561a86f}{miss\_class\_cost}}(\textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} label, \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} predicted)\{}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00073}00073       \textcolor{keywordflow}{return} (label == predicted) ? 0. : this-\/>\mbox{\hyperlink{classfdpot_1_1_fd_pot_a6a56279161c429c362a51b1caf5b555d}{missclaf\_cost}};}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00074}00074     \}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00075}00075     }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00076}00076     \mbox{\hyperlink{structfdpot_1_1_optim_traits_a9f09b5099d705f7ee80a65317d87e68b}{OptimTraits::OptimFuns}} \mbox{\hyperlink{classfdpot_1_1_fd_pot_a1f658b6eccd04a55f5aea19aef65965a}{create\_mathematical\_model}}(\textcolor{keyword}{const} arma::vec\& y, \textcolor{keyword}{const} arma::mat \& X\_coeff); }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00077}00077     }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00078}00078     \textcolor{keywordtype}{void} \mbox{\hyperlink{classfdpot_1_1_fd_pot_a5c7010908211f02dd9200e317f8666f8}{setup\_optimiser}}(\textcolor{keyword}{const} arma::vec\& y, \textcolor{keyword}{const} arma::mat \& X\_coeff);}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00079}00079     }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00080}00080     \textcolor{keywordtype}{void} \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8206c226e91c37e96d149caa01251f84}{initialise\_vars}}(std::uint32\_t \mbox{\hyperlink{classfdpot_1_1_fd_pot_ae79cda7726fcef91de1b5b2a97f31eed}{seed}}, \mbox{\hyperlink{structfdpot_1_1_optim_handler_af0327576da18868004fbc7a09d7a0c58}{OptimHandler::Dvector}} \& vars);}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00081}00081     }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00082}00082     }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00083}00083   \}; \textcolor{comment}{// class FdPot}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00084}00084     }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00085}00085   }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00086}00086  \}; \textcolor{comment}{// namespace fdpot}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00087}00087 }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8h_source_l00088}00088 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// p\_fdorct}}
+
+\end{DoxyCode}

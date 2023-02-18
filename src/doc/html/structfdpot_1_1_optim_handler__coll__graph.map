@@ -1,0 +1,6 @@
+<map id="fdpot::OptimHandler" name="fdpot::OptimHandler">
+<area shape="rect" id="node1" title="Interface class for optimisation." alt="" coords="5,243,144,268"/>
+<area shape="rect" id="node2" href="$structfdpot_1_1_optim_traits.html" title="Keeps the types for optimisation." alt="" coords="6,5,133,31"/>
+<area shape="rect" id="node4" href="$classfdpot_1_1_abstract___f_g__eval.html" title="An abstract class to evaluate function and gradients." alt="" coords="91,80,255,105"/>
+<area shape="rect" id="node3" href="$structfdpot_1_1_f_g__eval.html" title=" " alt="" coords="105,155,213,180"/>
+</map>

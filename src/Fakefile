@@ -1,0 +1,5 @@
+# Documentation
+# Common file for Doxygen documentation
+DOXYFILE=$(PACS_ROOT)/DoxyfileCommon
+docs:
+	doxygen $(DOXYFILE)

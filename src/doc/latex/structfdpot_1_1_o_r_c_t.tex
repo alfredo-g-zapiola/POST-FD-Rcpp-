@@ -1,0 +1,362 @@
+\hypertarget{structfdpot_1_1_o_r_c_t}{}\doxysection{fdpot\+::ORCT Struct Reference}
+\label{structfdpot_1_1_o_r_c_t}\index{fdpot::ORCT@{fdpot::ORCT}}
+
+
+Optimal Randomised Classification Tree.  
+
+
+
+
+{\ttfamily \#include $<$ORCT.\+h$>$}
+
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a1f75fd113eb068640ba071f89051d4ed}{StructureT}} = std\+::vector$<$ std\+::pair$<$ std\+::vector$<$ unsigned $>$, std\+::vector$<$ unsigned $>$ $>$ $>$
+\begin{DoxyCompactList}\small\item\em The type for the tree structure. \end{DoxyCompactList}\item 
+using \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a1274a26a9b2166c3a7559968cadc7088}{Tree\+InfoT}} = std\+::vector$<$ double $>$
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structfdpot_1_1_o_r_c_t_af603b807839b9da51661a69b1a43f04a}{ORCT}} (const unsigned depth\+\_\+, const unsigned n\+\_\+feats\+\_\+, const unsigned n\+\_\+labels\+\_\+, const double gamma\+\_\+=512)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a8e58ede4ab4994c4abaa469e5f08b629}{create\+\_\+structure}} (void)
+\begin{DoxyCompactList}\small\item\em setup nodes and tree specs \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename VarT $>$ }\\VarT \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a4c35e0a3e1152aec9ef265dca7ad586c}{cdf}} (const VarT x) const
+\item 
+{\footnotesize template$<$typename Var\+VecT $>$ }\\Var\+Vec\+T\+::value\+\_\+type \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a52cace4c387df21efc7b036691f9e2a5}{proba\+\_\+go\+\_\+left}} (const arma\+::rowvec \&feats, const Var\+VecT \&vars, unsigned tau) const
+\begin{DoxyCompactList}\small\item\em computes the probability a statistical unit goes left \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename Var\+VecT $>$ }\\Var\+Vec\+T\+::value\+\_\+type \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_ab2071e9a0108d1b5e4b9c571ef14bfb4}{proba\+\_\+fall\+\_\+leaf}} (const arma\+::rowvec \&, const Var\+VecT \&vars, unsigned tau) const
+\item 
+double \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a98e5dee6281f85f650918d4418723782}{predict}} (const \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a1f75fd113eb068640ba071f89051d4ed}{StructureT}} \&, const arma\+::vec \&vars) const
+\item 
+template$<$$>$ \mbox{\hyperlink{namespacefdpot_ac947a7ce1fadb857ee1bd012d021d578}{ADdouble}} \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a4976e9c46b47fd78b0e886e3fff030e4}{cdf}} (const \mbox{\hyperlink{namespacefdpot_ac947a7ce1fadb857ee1bd012d021d578}{ADdouble}} x) const
+\item 
+template$<$$>$ double \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a10b59b48c9c5fd691a1f28d8340b8109}{cdf}} (const double x) const
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a2001ce393936e72bd98fe94e828060c6}{predict}} (void)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+unsigned int \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_abd371e5e2d9bceb3a4d68aabf47baca9}{depth}}
+\item 
+double \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a1600234ee4806db06cf6e0d5d2d90b44}{gamma}} \{512.\}
+\item 
+unsigned \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_af4178d8704ab05d9ffd99debc4a06dae}{n\+\_\+nodes}} = 0
+\item 
+unsigned \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a83265e5dbf28623c7ea980d7785548e0}{n\+\_\+labels}} = 0
+\item 
+unsigned \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a1995a043069138ea8e93532049d85fd8}{n\+\_\+leaf\+\_\+nodes}} = 0
+\item 
+unsigned \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a3b9847e0b97fae8a6fed7ca1fdff8aab}{n\+\_\+int\+\_\+nodes}} = 0
+\item 
+unsigned \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_af2d818bcdbfc9b54fab21f2674822dc8}{n\+\_\+feats}} = 0
+\item 
+unsigned \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_ae39e6959e7ccf3954be6cd74897e088f}{n\+\_\+samples}} = 0
+\item 
+unsigned \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a199bfd123a46a8606a5f5ed7f3dbe603}{n\+\_\+vars}} = 0u
+\item 
+\mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a1f75fd113eb068640ba071f89051d4ed}{StructureT}} \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_aea36b9a2c26fa30a7741813c1f312ca6}{structure}}
+\begin{DoxyCompactList}\small\item\em The tree structure For its type, see the documentation this class\+: it is a vector of pairs of vectors of unsigned. \end{DoxyCompactList}\item 
+std\+::function$<$ unsigned(unsigned)$>$ \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a74496faeecfc9bff31a63ef104cf0506}{var\+\_\+map}} = nullptr
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Optimal Randomised Classification Tree. 
+
+A class whose purpose is to deal with the \mbox{\hyperlink{structfdpot_1_1_o_r_c_t}{ORCT}}\textquotesingle{}s structure, independently of whether it uses features of functionlal or multivariate data. 
+
+Definition at line \mbox{\hyperlink{_o_r_c_t_8h_source_l00018}{18}} of file \mbox{\hyperlink{_o_r_c_t_8h_source}{ORCT.\+h}}.
+
+
+
+\doxysubsection{Member Typedef Documentation}
+\mbox{\Hypertarget{structfdpot_1_1_o_r_c_t_a1f75fd113eb068640ba071f89051d4ed}\label{structfdpot_1_1_o_r_c_t_a1f75fd113eb068640ba071f89051d4ed}} 
+\index{fdpot::ORCT@{fdpot::ORCT}!StructureT@{StructureT}}
+\index{StructureT@{StructureT}!fdpot::ORCT@{fdpot::ORCT}}
+\doxysubsubsection{\texorpdfstring{StructureT}{StructureT}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a1f75fd113eb068640ba071f89051d4ed}{fdpot\+::\+ORCT\+::\+StructureT}} =  std\+::vector$<$ std\+::pair$<$std\+::vector$<$unsigned$>$, std\+::vector$<$unsigned$>$ $>$ $>$}
+
+
+
+The type for the tree structure. 
+
+Vector of a pair of vectors of unsigned\+: It holds 
+
+Definition at line \mbox{\hyperlink{_o_r_c_t_8h_source_l00025}{25}} of file \mbox{\hyperlink{_o_r_c_t_8h_source}{ORCT.\+h}}.
+
+\mbox{\Hypertarget{structfdpot_1_1_o_r_c_t_a1274a26a9b2166c3a7559968cadc7088}\label{structfdpot_1_1_o_r_c_t_a1274a26a9b2166c3a7559968cadc7088}} 
+\index{fdpot::ORCT@{fdpot::ORCT}!TreeInfoT@{TreeInfoT}}
+\index{TreeInfoT@{TreeInfoT}!fdpot::ORCT@{fdpot::ORCT}}
+\doxysubsubsection{\texorpdfstring{TreeInfoT}{TreeInfoT}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a1274a26a9b2166c3a7559968cadc7088}{fdpot\+::\+ORCT\+::\+Tree\+InfoT}} =  std\+::vector$<$double$>$}
+
+
+
+Definition at line \mbox{\hyperlink{_o_r_c_t_8h_source_l00026}{26}} of file \mbox{\hyperlink{_o_r_c_t_8h_source}{ORCT.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{structfdpot_1_1_o_r_c_t_af603b807839b9da51661a69b1a43f04a}\label{structfdpot_1_1_o_r_c_t_af603b807839b9da51661a69b1a43f04a}} 
+\index{fdpot::ORCT@{fdpot::ORCT}!ORCT@{ORCT}}
+\index{ORCT@{ORCT}!fdpot::ORCT@{fdpot::ORCT}}
+\doxysubsubsection{\texorpdfstring{ORCT()}{ORCT()}}
+{\footnotesize\ttfamily fdpot\+::\+ORCT\+::\+ORCT (\begin{DoxyParamCaption}\item[{const unsigned}]{depth\+\_\+,  }\item[{const unsigned}]{n\+\_\+feats\+\_\+,  }\item[{const unsigned}]{n\+\_\+labels\+\_\+,  }\item[{const double}]{gamma\+\_\+ = {\ttfamily 512} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructor. 
+
+Given the input parameter, calculates other specs of the tree, namely number of nodes, number of leaf noes and number of interior nodes It also invokes the \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a8e58ede4ab4994c4abaa469e5f08b629}{create\+\_\+structure()}} method 
+\begin{DoxyParams}{Parameters}
+{\em depth\+\_\+} & the tree depth. \\
+\hline
+{\em n\+\_\+feats\+\_\+} & how many features used to perform a split at each node \\
+\hline
+{\em n\+\_\+labels\+\_\+} & how many different classes there are. \\
+\hline
+{\em gamma\+\_\+} & randomisation parameter \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_o_r_c_t_8h_source_l00039}{39}} of file \mbox{\hyperlink{_o_r_c_t_8h_source}{ORCT.\+h}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{structfdpot_1_1_o_r_c_t_a4976e9c46b47fd78b0e886e3fff030e4}\label{structfdpot_1_1_o_r_c_t_a4976e9c46b47fd78b0e886e3fff030e4}} 
+\index{fdpot::ORCT@{fdpot::ORCT}!cdf@{cdf}}
+\index{cdf@{cdf}!fdpot::ORCT@{fdpot::ORCT}}
+\doxysubsubsection{\texorpdfstring{cdf()}{cdf()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily template$<$$>$ \\
+\mbox{\hyperlink{namespacefdpot_ac947a7ce1fadb857ee1bd012d021d578}{ADdouble}} fdpot\+::\+ORCT\+::cdf (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespacefdpot_ac947a7ce1fadb857ee1bd012d021d578}{ADdouble}}}]{x }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_fd_pot_8cpp_source_l00011}{11}} of file \mbox{\hyperlink{_fd_pot_8cpp_source}{Fd\+Pot.\+cpp}}.
+
+\mbox{\Hypertarget{structfdpot_1_1_o_r_c_t_a10b59b48c9c5fd691a1f28d8340b8109}\label{structfdpot_1_1_o_r_c_t_a10b59b48c9c5fd691a1f28d8340b8109}} 
+\index{fdpot::ORCT@{fdpot::ORCT}!cdf@{cdf}}
+\index{cdf@{cdf}!fdpot::ORCT@{fdpot::ORCT}}
+\doxysubsubsection{\texorpdfstring{cdf()}{cdf()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily template$<$$>$ \\
+double fdpot\+::\+ORCT\+::cdf (\begin{DoxyParamCaption}\item[{const double}]{x }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_o_r_c_t_8cpp_source_l00005}{5}} of file \mbox{\hyperlink{_o_r_c_t_8cpp_source}{ORCT.\+cpp}}.
+
+\mbox{\Hypertarget{structfdpot_1_1_o_r_c_t_a4c35e0a3e1152aec9ef265dca7ad586c}\label{structfdpot_1_1_o_r_c_t_a4c35e0a3e1152aec9ef265dca7ad586c}} 
+\index{fdpot::ORCT@{fdpot::ORCT}!cdf@{cdf}}
+\index{cdf@{cdf}!fdpot::ORCT@{fdpot::ORCT}}
+\doxysubsubsection{\texorpdfstring{cdf()}{cdf()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily template$<$typename VarT $>$ \\
+VarT fdpot\+::\+ORCT\+::cdf (\begin{DoxyParamCaption}\item[{const VarT}]{x }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{structfdpot_1_1_o_r_c_t_a8e58ede4ab4994c4abaa469e5f08b629}\label{structfdpot_1_1_o_r_c_t_a8e58ede4ab4994c4abaa469e5f08b629}} 
+\index{fdpot::ORCT@{fdpot::ORCT}!create\_structure@{create\_structure}}
+\index{create\_structure@{create\_structure}!fdpot::ORCT@{fdpot::ORCT}}
+\doxysubsubsection{\texorpdfstring{create\_structure()}{create\_structure()}}
+{\footnotesize\ttfamily void fdpot\+::\+ORCT\+::create\+\_\+structure (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+setup nodes and tree specs 
+
+This method fills the structure vector, as well as the var\+\_\+map 
+
+Definition at line \mbox{\hyperlink{_o_r_c_t_8cpp_source_l00009}{9}} of file \mbox{\hyperlink{_o_r_c_t_8cpp_source}{ORCT.\+cpp}}.
+
+\mbox{\Hypertarget{structfdpot_1_1_o_r_c_t_a98e5dee6281f85f650918d4418723782}\label{structfdpot_1_1_o_r_c_t_a98e5dee6281f85f650918d4418723782}} 
+\index{fdpot::ORCT@{fdpot::ORCT}!predict@{predict}}
+\index{predict@{predict}!fdpot::ORCT@{fdpot::ORCT}}
+\doxysubsubsection{\texorpdfstring{predict()}{predict()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily double fdpot\+::\+ORCT\+::predict (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a1f75fd113eb068640ba071f89051d4ed}{StructureT}} \&}]{,  }\item[{const arma\+::vec \&}]{vars }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{structfdpot_1_1_o_r_c_t_a2001ce393936e72bd98fe94e828060c6}\label{structfdpot_1_1_o_r_c_t_a2001ce393936e72bd98fe94e828060c6}} 
+\index{fdpot::ORCT@{fdpot::ORCT}!predict@{predict}}
+\index{predict@{predict}!fdpot::ORCT@{fdpot::ORCT}}
+\doxysubsubsection{\texorpdfstring{predict()}{predict()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily static void fdpot\+::\+ORCT\+::predict (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{structfdpot_1_1_o_r_c_t_ab2071e9a0108d1b5e4b9c571ef14bfb4}\label{structfdpot_1_1_o_r_c_t_ab2071e9a0108d1b5e4b9c571ef14bfb4}} 
+\index{fdpot::ORCT@{fdpot::ORCT}!proba\_fall\_leaf@{proba\_fall\_leaf}}
+\index{proba\_fall\_leaf@{proba\_fall\_leaf}!fdpot::ORCT@{fdpot::ORCT}}
+\doxysubsubsection{\texorpdfstring{proba\_fall\_leaf()}{proba\_fall\_leaf()}}
+{\footnotesize\ttfamily template$<$typename Var\+VecT $>$ \\
+Var\+Vec\+T\+::value\+\_\+type fdpot\+::\+ORCT\+::proba\+\_\+fall\+\_\+leaf (\begin{DoxyParamCaption}\item[{const arma\+::rowvec \&}]{feats,  }\item[{const Var\+VecT \&}]{vars,  }\item[{unsigned}]{tau }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_o_r_c_t_8h_source_l00160}{160}} of file \mbox{\hyperlink{_o_r_c_t_8h_source}{ORCT.\+h}}.
+
+\mbox{\Hypertarget{structfdpot_1_1_o_r_c_t_a52cace4c387df21efc7b036691f9e2a5}\label{structfdpot_1_1_o_r_c_t_a52cace4c387df21efc7b036691f9e2a5}} 
+\index{fdpot::ORCT@{fdpot::ORCT}!proba\_go\_left@{proba\_go\_left}}
+\index{proba\_go\_left@{proba\_go\_left}!fdpot::ORCT@{fdpot::ORCT}}
+\doxysubsubsection{\texorpdfstring{proba\_go\_left()}{proba\_go\_left()}}
+{\footnotesize\ttfamily template$<$typename Var\+VecT $>$ \\
+Var\+Vec\+T\+::value\+\_\+type fdpot\+::\+ORCT\+::proba\+\_\+go\+\_\+left (\begin{DoxyParamCaption}\item[{const arma\+::rowvec \&}]{feats,  }\item[{const Var\+VecT \&}]{vars,  }\item[{unsigned}]{tau }\end{DoxyParamCaption}) const}
+
+
+
+computes the probability a statistical unit goes left 
+
+Computes the probability a statistical unit will go left, i.\+e. will go from current node tau to a node on the next level that is left of the current node
+
+The features of the statistical unit (so in the functional case calculated ex ante) are needed, as well as the whole variables vector. Hence this method utilises the var\+\_\+map (see var\+\_\+map)
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em VarT} & the variable type. In this library, two different types are used\+: the ADdouble one (for Cpp\+AD compatibility for optimisation, see \mbox{\hyperlink{_fd_pot_8cpp}{Fd\+Pot.\+cpp}}) and double for the predict method (see TODO). enable\+\_\+if could be used so that only these two types are used for template specialisation. For scalability it was not used.\\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em feats} & the vector of the features for the statistical unit \\
+\hline
+{\em vars} & the vector of all variables. Of \\
+\hline
+{\em tau} & the node index (which node it is) // TODO enum or factory of functions for the distance \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{_o_r_c_t_8h_source_l00141}{141}} of file \mbox{\hyperlink{_o_r_c_t_8h_source}{ORCT.\+h}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{structfdpot_1_1_o_r_c_t_abd371e5e2d9bceb3a4d68aabf47baca9}\label{structfdpot_1_1_o_r_c_t_abd371e5e2d9bceb3a4d68aabf47baca9}} 
+\index{fdpot::ORCT@{fdpot::ORCT}!depth@{depth}}
+\index{depth@{depth}!fdpot::ORCT@{fdpot::ORCT}}
+\doxysubsubsection{\texorpdfstring{depth}{depth}}
+{\footnotesize\ttfamily unsigned int fdpot\+::\+ORCT\+::depth}
+
+
+
+Definition at line \mbox{\hyperlink{_o_r_c_t_8h_source_l00057}{57}} of file \mbox{\hyperlink{_o_r_c_t_8h_source}{ORCT.\+h}}.
+
+\mbox{\Hypertarget{structfdpot_1_1_o_r_c_t_a1600234ee4806db06cf6e0d5d2d90b44}\label{structfdpot_1_1_o_r_c_t_a1600234ee4806db06cf6e0d5d2d90b44}} 
+\index{fdpot::ORCT@{fdpot::ORCT}!gamma@{gamma}}
+\index{gamma@{gamma}!fdpot::ORCT@{fdpot::ORCT}}
+\doxysubsubsection{\texorpdfstring{gamma}{gamma}}
+{\footnotesize\ttfamily double fdpot\+::\+ORCT\+::gamma \{512.\}}
+
+
+
+Definition at line \mbox{\hyperlink{_o_r_c_t_8h_source_l00058}{58}} of file \mbox{\hyperlink{_o_r_c_t_8h_source}{ORCT.\+h}}.
+
+\mbox{\Hypertarget{structfdpot_1_1_o_r_c_t_af2d818bcdbfc9b54fab21f2674822dc8}\label{structfdpot_1_1_o_r_c_t_af2d818bcdbfc9b54fab21f2674822dc8}} 
+\index{fdpot::ORCT@{fdpot::ORCT}!n\_feats@{n\_feats}}
+\index{n\_feats@{n\_feats}!fdpot::ORCT@{fdpot::ORCT}}
+\doxysubsubsection{\texorpdfstring{n\_feats}{n\_feats}}
+{\footnotesize\ttfamily unsigned fdpot\+::\+ORCT\+::n\+\_\+feats = 0}
+
+
+
+Definition at line \mbox{\hyperlink{_o_r_c_t_8h_source_l00062}{62}} of file \mbox{\hyperlink{_o_r_c_t_8h_source}{ORCT.\+h}}.
+
+\mbox{\Hypertarget{structfdpot_1_1_o_r_c_t_a3b9847e0b97fae8a6fed7ca1fdff8aab}\label{structfdpot_1_1_o_r_c_t_a3b9847e0b97fae8a6fed7ca1fdff8aab}} 
+\index{fdpot::ORCT@{fdpot::ORCT}!n\_int\_nodes@{n\_int\_nodes}}
+\index{n\_int\_nodes@{n\_int\_nodes}!fdpot::ORCT@{fdpot::ORCT}}
+\doxysubsubsection{\texorpdfstring{n\_int\_nodes}{n\_int\_nodes}}
+{\footnotesize\ttfamily unsigned fdpot\+::\+ORCT\+::n\+\_\+int\+\_\+nodes = 0}
+
+
+
+Definition at line \mbox{\hyperlink{_o_r_c_t_8h_source_l00061}{61}} of file \mbox{\hyperlink{_o_r_c_t_8h_source}{ORCT.\+h}}.
+
+\mbox{\Hypertarget{structfdpot_1_1_o_r_c_t_a83265e5dbf28623c7ea980d7785548e0}\label{structfdpot_1_1_o_r_c_t_a83265e5dbf28623c7ea980d7785548e0}} 
+\index{fdpot::ORCT@{fdpot::ORCT}!n\_labels@{n\_labels}}
+\index{n\_labels@{n\_labels}!fdpot::ORCT@{fdpot::ORCT}}
+\doxysubsubsection{\texorpdfstring{n\_labels}{n\_labels}}
+{\footnotesize\ttfamily unsigned fdpot\+::\+ORCT\+::n\+\_\+labels = 0}
+
+
+
+Definition at line \mbox{\hyperlink{_o_r_c_t_8h_source_l00061}{61}} of file \mbox{\hyperlink{_o_r_c_t_8h_source}{ORCT.\+h}}.
+
+\mbox{\Hypertarget{structfdpot_1_1_o_r_c_t_a1995a043069138ea8e93532049d85fd8}\label{structfdpot_1_1_o_r_c_t_a1995a043069138ea8e93532049d85fd8}} 
+\index{fdpot::ORCT@{fdpot::ORCT}!n\_leaf\_nodes@{n\_leaf\_nodes}}
+\index{n\_leaf\_nodes@{n\_leaf\_nodes}!fdpot::ORCT@{fdpot::ORCT}}
+\doxysubsubsection{\texorpdfstring{n\_leaf\_nodes}{n\_leaf\_nodes}}
+{\footnotesize\ttfamily unsigned fdpot\+::\+ORCT\+::n\+\_\+leaf\+\_\+nodes = 0}
+
+
+
+Definition at line \mbox{\hyperlink{_o_r_c_t_8h_source_l00061}{61}} of file \mbox{\hyperlink{_o_r_c_t_8h_source}{ORCT.\+h}}.
+
+\mbox{\Hypertarget{structfdpot_1_1_o_r_c_t_af4178d8704ab05d9ffd99debc4a06dae}\label{structfdpot_1_1_o_r_c_t_af4178d8704ab05d9ffd99debc4a06dae}} 
+\index{fdpot::ORCT@{fdpot::ORCT}!n\_nodes@{n\_nodes}}
+\index{n\_nodes@{n\_nodes}!fdpot::ORCT@{fdpot::ORCT}}
+\doxysubsubsection{\texorpdfstring{n\_nodes}{n\_nodes}}
+{\footnotesize\ttfamily unsigned fdpot\+::\+ORCT\+::n\+\_\+nodes = 0}
+
+
+
+Definition at line \mbox{\hyperlink{_o_r_c_t_8h_source_l00061}{61}} of file \mbox{\hyperlink{_o_r_c_t_8h_source}{ORCT.\+h}}.
+
+\mbox{\Hypertarget{structfdpot_1_1_o_r_c_t_ae39e6959e7ccf3954be6cd74897e088f}\label{structfdpot_1_1_o_r_c_t_ae39e6959e7ccf3954be6cd74897e088f}} 
+\index{fdpot::ORCT@{fdpot::ORCT}!n\_samples@{n\_samples}}
+\index{n\_samples@{n\_samples}!fdpot::ORCT@{fdpot::ORCT}}
+\doxysubsubsection{\texorpdfstring{n\_samples}{n\_samples}}
+{\footnotesize\ttfamily unsigned fdpot\+::\+ORCT\+::n\+\_\+samples = 0}
+
+
+
+Definition at line \mbox{\hyperlink{_o_r_c_t_8h_source_l00062}{62}} of file \mbox{\hyperlink{_o_r_c_t_8h_source}{ORCT.\+h}}.
+
+\mbox{\Hypertarget{structfdpot_1_1_o_r_c_t_a199bfd123a46a8606a5f5ed7f3dbe603}\label{structfdpot_1_1_o_r_c_t_a199bfd123a46a8606a5f5ed7f3dbe603}} 
+\index{fdpot::ORCT@{fdpot::ORCT}!n\_vars@{n\_vars}}
+\index{n\_vars@{n\_vars}!fdpot::ORCT@{fdpot::ORCT}}
+\doxysubsubsection{\texorpdfstring{n\_vars}{n\_vars}}
+{\footnotesize\ttfamily unsigned fdpot\+::\+ORCT\+::n\+\_\+vars = 0u}
+
+
+
+Definition at line \mbox{\hyperlink{_o_r_c_t_8h_source_l00062}{62}} of file \mbox{\hyperlink{_o_r_c_t_8h_source}{ORCT.\+h}}.
+
+\mbox{\Hypertarget{structfdpot_1_1_o_r_c_t_aea36b9a2c26fa30a7741813c1f312ca6}\label{structfdpot_1_1_o_r_c_t_aea36b9a2c26fa30a7741813c1f312ca6}} 
+\index{fdpot::ORCT@{fdpot::ORCT}!structure@{structure}}
+\index{structure@{structure}!fdpot::ORCT@{fdpot::ORCT}}
+\doxysubsubsection{\texorpdfstring{structure}{structure}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a1f75fd113eb068640ba071f89051d4ed}{StructureT}} fdpot\+::\+ORCT\+::structure}
+
+
+
+The tree structure For its type, see the documentation this class\+: it is a vector of pairs of vectors of unsigned. 
+
+Each element of the outermost vector correspond to a node. Within each node, there are two vectors of unsigned\+: the first one contains the left parent nodes\textquotesingle{} indices; the second one the right parent nodes\textquotesingle{} ones
+
+\begin{DoxyNote}{Note}
+Storing the parent nodes is crucial since the objective function for an \mbox{\hyperlink{structfdpot_1_1_o_r_c_t}{ORCT}} works calculating the probability of falling in a certain node which of course depends on the probability of falling in the nodes before such node 
+\end{DoxyNote}
+
+
+Definition at line \mbox{\hyperlink{_o_r_c_t_8h_source_l00076}{76}} of file \mbox{\hyperlink{_o_r_c_t_8h_source}{ORCT.\+h}}.
+
+\mbox{\Hypertarget{structfdpot_1_1_o_r_c_t_a74496faeecfc9bff31a63ef104cf0506}\label{structfdpot_1_1_o_r_c_t_a74496faeecfc9bff31a63ef104cf0506}} 
+\index{fdpot::ORCT@{fdpot::ORCT}!var\_map@{var\_map}}
+\index{var\_map@{var\_map}!fdpot::ORCT@{fdpot::ORCT}}
+\doxysubsubsection{\texorpdfstring{var\_map}{var\_map}}
+{\footnotesize\ttfamily std\+::function$<$unsigned(unsigned)$>$ fdpot\+::\+ORCT\+::var\+\_\+map = nullptr}
+
+
+
+Definition at line \mbox{\hyperlink{_o_r_c_t_8h_source_l00084}{84}} of file \mbox{\hyperlink{_o_r_c_t_8h_source}{ORCT.\+h}}.
+
+
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_o_r_c_t_8h}{ORCT.\+h}}\item 
+\mbox{\hyperlink{_fd_pot_8cpp}{Fd\+Pot.\+cpp}}\item 
+\mbox{\hyperlink{_o_r_c_t_8cpp}{ORCT.\+cpp}}\end{DoxyCompactItemize}

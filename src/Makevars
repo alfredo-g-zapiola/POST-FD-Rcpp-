@@ -1,0 +1,89 @@
+
+## With R 3.1.0 or later, you can uncomment the following line to tell R to 
+## enable compilation with C++11 (where available)
+##
+## Also, OpenMP support in Armadillo prefers C++11 support. However, for wider
+## availability of the package we do not yet enforce this here.  It is however
+## recommended for client packages to set it.
+##
+## And with R 3.4.0, and RcppArmadillo 0.7.960.*, we turn C++11 on as OpenMP
+## support within Armadillo prefers / re	quires it
+CXX_STD = CXX17
+PACS_ROOT ?= /home/alfredo/Documents/Polimi/PACS/pacs-examples/Examples
+DEV ?= -D DEV -D ARMA_NO_DEBUG  -D MYNDEBUG
+## Start of different libraries and locations Section
+# i. PACS lib
+PACS_INC_DIR = $(PACS_ROOT)/include
+# all the libraries generated from PACS
+PACS_LIB = -L$(PACS_ROOT)/lib -Wl,-rpath,$(PACS_ROOT)/lib -lblas  -lpacs  -lMesh1D  -lNewton -lMesh -lquadrules -lquadrature 
+									
+# ii. Dirichlet.  for the dirichlet sampling, header only
+DIRICHLET_INC_DIR = ../inst/dirichlet-cpp
+
+# iii. define openblas which integrates lapack and blas
+OPENBLAS_LIBS = -L${mkOpenBlasLib} -lopenblas	
+
+# iv. Cppad
+CPPAD_LIB_DIR = /usr/local/lib/ 
+CPPAD_LIB =  -L$(CPPAD_LIB_DIR)  -Wl,-rpath,$(CPPAD_LIB_DIR) -lcppad_lib -lcppad_ipopt -lipopt 
+
+
+
+## END of section
+
+
+
+
+# 1. Preprocessor flags
+#libPacs (for numerical quadrature)
+ALL_INC_DIR=  $(PACS_INC_DIR) $(DIRICHLET_INC_DIR) 
+includes := $(foreach inc,$(ALL_INC_DIR),-I$(inc) )
+INCLS  =  -I./include $(includes) 
+
+PKG_CPPFLAGS += $(INCLS) $(DEV)
+
+
+
+# -I$(PWD)/code -I./src -I./inst/include -I/usr/include/R/ -I/usr/lib/R/library/Rcpp/include -I/usr/lib/R/library/RcppArmadillo/include -I/usr/local/include   
+
+# 2. Compiler options
+
+#ALL_LIB_DIR=$(PACS_LIB_DIR) $(OTHER_LIB_DIR)
+#LIB := $(foreach lib,$(ALL_LIB_DIR),-L$(lib) )
+
+PKG_CXXFLAGS = $(SHLIB_OPENMP_CXXFLAGS) -lpthread
+
+# 3. Linker options (set through PKG_LIBS in R packages)
+# $(SHLIB_OPENMP_CXXFLAGS)
+PKG_LIBS =   $(SHLIB_OPENMP_CXXFLAGS) $(FLIBS) $(OPENBLAS_LIBS) $(PACS_LIB) $(CPPAD_LIB) 
+
+
+# load dynamicallyob
+
+#CppAD
+
+
+
+
+# LDLIBS: libraries to be loaded
+
+
+
+# LDFLAGS: linker options
+
+# Preprocessor flags
+# PKG_CPPFLAGS = -I../inst/inclu	de -I${PACS_ROOT}/include/  -I${PACS_ROOT}/lib/ -I/usr/lib
+
+
+
+
+# PKG_LIBS += -L/usr/local/lib/ -lcppad_lib -lcppad_ipopt 
+# -L/usr/lib -lipopt -L/usr/lib/R/library/Rcpp/libs/ -Wl,-rpath,/usr/lib/R/library/Rcpp/libs/ -L/usr/lib/R/library/RcppArmadillo/libs/ -Wl,-rpath,/usr/lib/R/library/RcppArmadillo/libs/ -L${PACS_ROOT}/lib -Wl,-rpath,${PACS_ROOT}/lib -lpacs -lquadrature -lMesh1D  
+# -lNewton -lMesh -lquadrules 
+# PKG_LDFLAGS += -Wl,-rpath,/usr/local/lib/ 
+
+
+# tell R to look at these sources
+SOURCES += $(wildcard *.cpp))
+
+

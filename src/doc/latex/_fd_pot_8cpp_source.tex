@@ -1,0 +1,348 @@
+\hypertarget{_fd_pot_8cpp_source}{}\doxysection{Fd\+Pot.\+cpp}
+\mbox{\hyperlink{_fd_pot_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00001}00001 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_fd_pot_8h}{FdPot.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00002}00002 \textcolor{preprocessor}{\#include <assert.h>}     \textcolor{comment}{/* assert */}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00003}00003 \textcolor{comment}{// TODO cassert formaggia}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00004}00004 \textcolor{preprocessor}{\#include <algorithm>} \textcolor{comment}{// std::min\_element}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00005}00005 }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00006}00006 }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00007}00007 \textcolor{keyword}{using namespace }\mbox{\hyperlink{namespacefdpot}{fdpot}};}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00008}00008 \textcolor{keyword}{using }Rcpp::\_;  \textcolor{comment}{// named placeholder, used to create an Rcpp List}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00009}00009 }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00010}00010 \textcolor{keyword}{template}<>}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00011}\mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a4976e9c46b47fd78b0e886e3fff030e4}{00011}} \mbox{\hyperlink{namespacefdpot_ac947a7ce1fadb857ee1bd012d021d578}{ADdouble}} ORCT::cdf<ADdouble>(\textcolor{keyword}{const} \mbox{\hyperlink{namespacefdpot_ac947a7ce1fadb857ee1bd012d021d578}{ADdouble}} x)\textcolor{keyword}{ const}\{}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00012}00012   \textcolor{keywordflow}{return} 1 / (1 + CppAD::exp(-\/ x * this-\/>\mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a1600234ee4806db06cf6e0d5d2d90b44}{gamma}}));}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00013}00013 \};}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00014}00014 }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00015}\mbox{\hyperlink{classfdpot_1_1_fd_pot_ac8f2601431994ad7f973d799d0c8daa2}{00015}} Rcpp::List \mbox{\hyperlink{classfdpot_1_1_fd_pot_ac8f2601431994ad7f973d799d0c8daa2}{FdPot::fit}}(\textcolor{keyword}{const} arma::vec\& y, \textcolor{keyword}{const} arma::mat \& X\_coeff,}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00016}00016                       \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} n\_sols\_)\{}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00017}00017   this-\/>\mbox{\hyperlink{classfdpot_1_1_fd_pot_a246ab6b0510387d904ef3e9bdd8d615e}{n\_sols}} = n\_sols\_;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00018}00018   \textcolor{comment}{// provide the tree class with the number of samples}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00019}00019 \textcolor{preprocessor}{\#ifndef MYNDEBUG}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00020}00020   std::cout << \textcolor{stringliteral}{"{}Received dataset with "{}} << this-\/>\mbox{\hyperlink{classfdpot_1_1_fd_pot_a591ec614105ae21dda750c3ccc9b44bb}{n\_samples}} << \textcolor{stringliteral}{"{}samples and "{}} << }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00021}00021     \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_labels << \textcolor{stringliteral}{"{} different labels"{}} << std::endl;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00022}00022 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00023}00023   Rcpp::Rcout << \textcolor{stringliteral}{"{}Received dataset with "{}} << \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_samples << \textcolor{stringliteral}{"{} and "{}} << }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00024}00024     \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_labels << \textcolor{stringliteral}{"{} different labels"{}} << std::endl;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00025}00025 \textcolor{preprocessor}{\#endif }}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00026}00026   \textcolor{comment}{// what we are implicitly doing:}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00027}00027   \textcolor{comment}{// cast the coefficients Rcpp::NumericMatrix to an arma::mat (for vec multiplication)}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00028}00028   \textcolor{comment}{// avoid copies! https://stackoverflow.com/questions/57516726/converting-\/r-\/matrix-\/to-\/armamat-\/with-\/list}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00029}00029   \textcolor{comment}{// arma::mat X\_cast = splines2::rmat2arma(X\_coeff);}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00030}00030 }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00031}00031   \textcolor{comment}{// auto \& [n1, n2] =  cannot do this in c++14}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00032}00032   \textcolor{comment}{// single class per leaf constraints}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00033}00033   this-\/>\mbox{\hyperlink{classfdpot_1_1_fd_pot_a7181ba733b0839596f0880e3d6eb3754}{n\_constrs}}.first = \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_leaf\_nodes;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00034}00034   \textcolor{comment}{// at least one terminal node per class constraints}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00035}00035   this-\/>\mbox{\hyperlink{classfdpot_1_1_fd_pot_a7181ba733b0839596f0880e3d6eb3754}{n\_constrs}}.second  = \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_labels;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00036}00036 \textcolor{preprocessor}{\#ifndef MYNDEBUG }}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00037}00037   std::cout << \textcolor{stringliteral}{"{}Computing features"{}} << std::endl;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00038}00038 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00039}00039 \textcolor{preprocessor}{\#ifdef DEV }}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00040}00040   Rcpp::Rcout << \textcolor{stringliteral}{"{}Computing features"{}} << std::endl;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00041}00041 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00042}00042   \textcolor{comment}{// copy elision}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00043}00043   this-\/>\mbox{\hyperlink{classfdpot_1_1_fd_pot_a5972d5786052dbc096f1207d34c1b913}{features}} = arma::mat(\mbox{\hyperlink{classfdpot_1_1_fd_pot_ac75a6174e4924b81a147941e2715cd63}{evalFd}}.\mbox{\hyperlink{class_fd_handler_3_01_basis_enum_1_1_b_s_p_l_i_n_e_01_4_ac66235b4035349b3559434e88e2263de}{compute\_features}}(X\_coeff, \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_feats));}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00044}00044   }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00045}00045 \textcolor{preprocessor}{\#ifndef MYNDEBUG }}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00046}00046   std::cout << \textcolor{stringliteral}{"{}Computing dissimilarity matrix"{}} << std::endl;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00047}00047 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00048}00048 \textcolor{preprocessor}{\#ifdef DEV }}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00049}00049   Rcpp::Rcout << \textcolor{stringliteral}{"{}Computing dissimilarity matrix"{}} << std::endl;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00050}00050 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00051}00051   this-\/>\mbox{\hyperlink{classfdpot_1_1_fd_pot_a53654c0d60a36def04c42c1650330496}{dissim\_matrix}} = this-\/>\mbox{\hyperlink{classfdpot_1_1_fd_pot_ac75a6174e4924b81a147941e2715cd63}{evalFd}}.\mbox{\hyperlink{class_fd_handler_3_01_basis_enum_1_1_b_s_p_l_i_n_e_01_4_a459537307ff8a19092b4c1d620cb469a}{compute\_dissim\_matrix}}(X\_coeff);}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00052}00052   }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00053}00053 \textcolor{preprocessor}{\#ifndef MYNDEBUG }}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00054}00054   std::cout << \textcolor{stringliteral}{"{}Setting up optimiser"{}} << std::endl;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00055}00055 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00056}00056 \textcolor{preprocessor}{\#ifdef DEV }}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00057}00057   Rcpp::Rcout << \textcolor{stringliteral}{"{}Setting up optimiser"{}} << std::endl;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00058}00058 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00059}00059   }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00060}00060   this-\/>\mbox{\hyperlink{classfdpot_1_1_fd_pot_a5c7010908211f02dd9200e317f8666f8}{setup\_optimiser}}(y, X\_coeff);}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00061}00061     }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00062}00062 \textcolor{preprocessor}{\#ifndef MYNDEBUG }}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00063}00063   std::cout << \textcolor{stringliteral}{"{}Solving problems with different init points"{}} << std::endl;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00064}00064 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00065}00065 \textcolor{preprocessor}{\#ifdef DEV }}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00066}00066   Rcpp::Rcout << \textcolor{stringliteral}{"{}Solving problems with different init points"{}} << std::endl;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00067}00067 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00068}00068   }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00069}00069   \textcolor{keyword}{auto} res = this-\/>\mbox{\hyperlink{classfdpot_1_1_fd_pot_a962a7d85da79db2fd55f6fd29ff033b0}{solve\_trees}}();}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00070}00070   }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00071}00071   \textcolor{keywordflow}{return} res;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00072}00072 \}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00073}00073 }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00074}00074 }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00075}\mbox{\hyperlink{classfdpot_1_1_fd_pot_a1f658b6eccd04a55f5aea19aef65965a}{00075}} \mbox{\hyperlink{structfdpot_1_1_optim_traits_a9f09b5099d705f7ee80a65317d87e68b}{OptimTraits::OptimFuns}} \mbox{\hyperlink{classfdpot_1_1_fd_pot_a1f658b6eccd04a55f5aea19aef65965a}{FdPot::create\_mathematical\_model}}(\textcolor{keyword}{const} arma::vec\& y,}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00076}00076                                                         \textcolor{keyword}{const} arma::mat \& X\_coeff)\{}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00077}00077   }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00078}00078   }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00079}00079   \textcolor{comment}{// initialise what we retur  (recall std::function is a pointer wrapper)}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00080}00080   \mbox{\hyperlink{structfdpot_1_1_optim_traits_a9f09b5099d705f7ee80a65317d87e68b}{OptimTraits::OptimFuns}} f = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00081}00081   }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00082}00082   this-\/>\mbox{\hyperlink{classfdpot_1_1_fd_pot_a36359a8c660768ff2bfc6cf64e26ceac}{cost\_func}} = [\textcolor{keyword}{this}, \&y] (\textcolor{keyword}{const} \mbox{\hyperlink{structfdpot_1_1_optim_traits_a8e397c4670fe0ad2c621c32ba15abbf5}{OptimTraits::ADvector}}\& vars) -\/> \mbox{\hyperlink{namespacefdpot_ac947a7ce1fadb857ee1bd012d021d578}{ADdouble}} \{}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00083}00083     \mbox{\hyperlink{namespacefdpot_ac947a7ce1fadb857ee1bd012d021d578}{ADdouble}} e\_cost = 0.;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00084}00084     }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00085}00085     \textcolor{comment}{// TODO pragma.}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00086}00086 \textcolor{preprocessor}{\#ifndef MYNDEBUG}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00087}00087     std::cout << \textcolor{stringliteral}{"{}N samples is "{}} << \mbox{\hyperlink{classfdpot_1_1_fd_pot_a591ec614105ae21dda750c3ccc9b44bb}{n\_samples}} << std::endl;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00088}00088 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00089}00089     }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00090}00090     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} i = 0; i < this-\/>\mbox{\hyperlink{classfdpot_1_1_fd_pot_a591ec614105ae21dda750c3ccc9b44bb}{n\_samples}}; i++)\{ \textcolor{comment}{// all samples}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00091}00091       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} leaf = \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_int\_nodes; \textcolor{comment}{// first leaf comes after int\_nodes}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00092}00092            leaf < orct\_ptr-\/>n\_nodes; leaf++)\{  \textcolor{comment}{// all leafs}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00093}00093         }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00094}00094         \mbox{\hyperlink{namespacefdpot_ac947a7ce1fadb857ee1bd012d021d578}{ADdouble}} leaf\_c = 0.;  \textcolor{comment}{// cost of the current leaf}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00095}00095         }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00096}00096         \textcolor{comment}{// first\_class var in this leaf}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00097}00097         \textcolor{keywordtype}{unsigned} c\_kt = \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>var\_map(leaf);}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00098}00098         }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00099}00099         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} k = 0; k < \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_labels; k ++)\{}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00100}00100           leaf\_c += \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>proba\_fall\_leaf(this-\/>\mbox{\hyperlink{classfdpot_1_1_fd_pot_a5972d5786052dbc096f1207d34c1b913}{features}}.row(i), vars, leaf) * }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00101}00101             this-\/>\mbox{\hyperlink{classfdpot_1_1_fd_pot_a2530552134aa3ca06f998cb0d561a86f}{miss\_class\_cost}}(y(i), k) * vars[c\_kt++];}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00102}00102           \textcolor{comment}{// todo use .at once it is checked, since operator() performs bound check}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00103}00103         \}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00104}00104       \}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00105}00105     \}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00106}00106 }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00107}00107     e\_cost /= this-\/>\mbox{\hyperlink{classfdpot_1_1_fd_pot_a591ec614105ae21dda750c3ccc9b44bb}{n\_samples}};}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00108}00108 \textcolor{preprocessor}{\#ifndef MYNDEBUG}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00109}00109     std::cout << \textcolor{stringliteral}{"{}Expected cost is:"{}} << e\_cost << std::endl;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00110}00110 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00111}00111     \textcolor{keywordflow}{return} e\_cost;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00112}00112   \};}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00113}00113   }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00114}00114   this-\/>\mbox{\hyperlink{classfdpot_1_1_fd_pot_adc733950b91e2db7801846e6963e5827}{penalty\_func}} = [\textcolor{keyword}{this}, \&y] (\textcolor{keyword}{const} \mbox{\hyperlink{structfdpot_1_1_optim_traits_a8e397c4670fe0ad2c621c32ba15abbf5}{OptimTraits::ADvector}}\& vars) -\/> \mbox{\hyperlink{namespacefdpot_ac947a7ce1fadb857ee1bd012d021d578}{ADdouble}}\{}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00115}00115     \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00116}00116 \textcolor{comment}{\#ifndef MYNDEBUG}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00117}00117 \textcolor{comment}{     std::cout<< "{}Now computing dissimilarity term"{} << std::endl;}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00118}00118 \textcolor{comment}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00119}00119 \textcolor{comment}{     */}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00120}00120     \textcolor{comment}{// expected dissimilarity per leaf}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00121}00121     \mbox{\hyperlink{namespacefdpot_ac947a7ce1fadb857ee1bd012d021d578}{ADdouble}} e\_diss = 0.;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00122}00122     \textcolor{comment}{// the idx of the first leaf nodes is the number of interior nodes}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00123}00123     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} tau = \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_int\_nodes; tau < orct\_ptr-\/>n\_nodes; tau++)\{}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00124}00124       \mbox{\hyperlink{namespacefdpot_ac947a7ce1fadb857ee1bd012d021d578}{ADdouble}} leaf\_d = 0.;  \textcolor{comment}{// leaf dissimilarity}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00125}00125       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} i = 0; i < this-\/>\mbox{\hyperlink{classfdpot_1_1_fd_pot_a591ec614105ae21dda750c3ccc9b44bb}{n\_samples}}; i++)\{}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00126}00126         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} j = i+1; j < this-\/>\mbox{\hyperlink{classfdpot_1_1_fd_pot_a591ec614105ae21dda750c3ccc9b44bb}{n\_samples}}; j++)\{}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00127}00127           leaf\_d +=  \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>proba\_fall\_leaf(this-\/>\mbox{\hyperlink{classfdpot_1_1_fd_pot_a5972d5786052dbc096f1207d34c1b913}{features}}.row(i), vars, tau) *}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00128}00128             \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>proba\_fall\_leaf(this-\/>features.row(j), vars, tau) * }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00129}00129             this-\/>\mbox{\hyperlink{classfdpot_1_1_fd_pot_a53654c0d60a36def04c42c1650330496}{dissim\_matrix}}(i, j);}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00130}00130         \}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00131}00131       \}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00132}00132     \}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00133}00133     e\_diss /= \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_leaf\_nodes;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00134}00134     \textcolor{keywordflow}{return} e\_diss;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00135}00135   \};}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00136}00136 }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00137}00137   \textcolor{comment}{// obj\_fn era qui    }}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00138}00138   }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00139}00139   \textcolor{keyword}{auto} constr\_single\_class\_pred = [\textcolor{keyword}{this}] (\textcolor{keyword}{const} \mbox{\hyperlink{structfdpot_1_1_optim_traits_a8e397c4670fe0ad2c621c32ba15abbf5}{OptimTraits::ADvector}}\& vars,}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00140}00140                                           \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} tau) -\/> \mbox{\hyperlink{namespacefdpot_ac947a7ce1fadb857ee1bd012d021d578}{ADdouble}}\{}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00141}00141     \textcolor{comment}{// pragma?}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00142}00142     \mbox{\hyperlink{namespacefdpot_ac947a7ce1fadb857ee1bd012d021d578}{ADdouble}} sum = 0.;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00143}00143     \textcolor{keywordtype}{unsigned} first\_idx = \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>var\_map(tau);}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00144}00144     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} k = 0; k < \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_labels; k++)}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00145}00145       sum += vars.at(first\_idx++);}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00146}00146     \textcolor{keywordflow}{return} sum;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00147}00147   \};}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00148}00148   }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00149}00149   \textcolor{keyword}{auto} constr\_one\_leaf\_per\_class = [\textcolor{keyword}{this}] (\textcolor{keyword}{const} \mbox{\hyperlink{structfdpot_1_1_optim_traits_a8e397c4670fe0ad2c621c32ba15abbf5}{OptimTraits::ADvector}}\& vars,}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00150}00150                                      \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} k) -\/> \mbox{\hyperlink{namespacefdpot_ac947a7ce1fadb857ee1bd012d021d578}{ADdouble}}\{}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00151}00151       \mbox{\hyperlink{namespacefdpot_ac947a7ce1fadb857ee1bd012d021d578}{ADdouble}} sum = 0.;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00152}00152       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} leaf = \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_int\_nodes;  leaf < orct\_ptr-\/>n\_nodes; leaf++)}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00153}00153         sum += vars.at(\mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>var\_map(leaf) + k);}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00154}00154       \textcolor{keywordflow}{return} sum; }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00155}00155   \};}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00156}00156   \textcolor{comment}{// prepare optim funs (functions passed by copy since else we get seg fault)}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00157}00157   f = [\textcolor{keyword}{this}, constr\_single\_class\_pred, constr\_one\_leaf\_per\_class] }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00158}00158       (\mbox{\hyperlink{structfdpot_1_1_optim_traits_a8e397c4670fe0ad2c621c32ba15abbf5}{OptimTraits::ADvector}}\& fg, \textcolor{keyword}{const} \mbox{\hyperlink{structfdpot_1_1_optim_traits_a8e397c4670fe0ad2c621c32ba15abbf5}{OptimTraits::ADvector}}\& x) -\/> \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00159}00159     \{}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00160}00160     \textcolor{comment}{// objective function}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00161}00161     \textcolor{comment}{// fg[0] = obj\_function(x);}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00162}00162     fg[0] = this-\/>\mbox{\hyperlink{classfdpot_1_1_fd_pot_a36359a8c660768ff2bfc6cf64e26ceac}{cost\_func}}(x);}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00163}00163     \textcolor{comment}{// single class prediction per leaf constraints}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00164}00164     \textcolor{keywordtype}{unsigned} i = 1;  \textcolor{comment}{// constraint index}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00165}00165     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} leaf = \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_int\_nodes; leaf < orct\_ptr-\/>n\_nodes; leaf++)}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00166}00166       fg[i++] = constr\_single\_class\_pred(x, leaf);}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00167}00167     }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00168}00168     \textcolor{comment}{// at least one leaf per class constraints}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00169}00169     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} k = 0; k < \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_labels; k++)}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00170}00170       fg[i++] = constr\_one\_leaf\_per\_class(x, k);}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00171}00171     \};}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00172}00172   }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00173}00173   \textcolor{keywordflow}{return} f;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00174}00174   \};}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00175}00175 }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00176}\mbox{\hyperlink{classfdpot_1_1_fd_pot_a5c7010908211f02dd9200e317f8666f8}{00176}} \textcolor{keywordtype}{void} \mbox{\hyperlink{classfdpot_1_1_fd_pot_a5c7010908211f02dd9200e317f8666f8}{FdPot::setup\_optimiser}}(\textcolor{keyword}{const} arma::vec\& y, \textcolor{keyword}{const} arma::mat \& X\_coeff)\{}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00177}00177 }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00178}00178   this-\/>\mbox{\hyperlink{classfdpot_1_1_fd_pot_ac767b3f7803b53bb30f95a4d8c386744}{optimiser}}-\/>create\_variables(\mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_vars,}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00179}00179                                     \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_leaf\_nodes + \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_labels);}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00180}00180   }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00181}00181 \textcolor{preprocessor}{\#ifndef MYNDEBUG}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00182}00182   std::cout<< \textcolor{stringliteral}{"{}Created variables: n\_feats "{}} << \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_feats << \textcolor{stringliteral}{"{} n int nodes: "{}} <<}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00183}00183     \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_int\_nodes << \textcolor{stringliteral}{"{} n\_labels "{}} << \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_labels << \textcolor{stringliteral}{"{} n\_leaf nodes "{}} <<}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00184}00184       \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_leaf\_nodes << \textcolor{stringliteral}{"{} yields n\_vars "{}} <<\mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/> n\_vars << }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00185}00185         \textcolor{stringliteral}{"{} and n\_constraints "{}} << \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_leaf\_nodes + \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_labels << std::endl;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00186}00186 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00187}00187   }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00188}00188   \textcolor{comment}{// set up variables' bounds}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00189}00189   \mbox{\hyperlink{structfdpot_1_1_optim_traits_a7d43e2009f8fa8c83d48d7994b90e5c6}{Dvector}} vars\_lb(\mbox{\hyperlink{classfdpot_1_1_fd_pot_ac767b3f7803b53bb30f95a4d8c386744}{optimiser}}-\/>n\_vars), vars\_ub(\mbox{\hyperlink{classfdpot_1_1_fd_pot_ac767b3f7803b53bb30f95a4d8c386744}{optimiser}}-\/>n\_vars);}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00190}00190   }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00191}00191   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} v = 0; v < (\mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_int\_nodes * (\mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_feats + 1));}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00192}00192   v++)\{}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00193}00193     vars\_lb[v] = -\/1.;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00194}00194     vars\_ub[v] = 1.;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00195}00195   \}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00196}00196   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} v = \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_int\_nodes * (\mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_feats + 1);}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00197}00197        v < this-\/>\mbox{\hyperlink{classfdpot_1_1_fd_pot_ac767b3f7803b53bb30f95a4d8c386744}{optimiser}}-\/>n\_vars; v++)\{}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00198}00198     vars\_lb[v] = 0.;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00199}00199     vars\_ub[v] = 1.;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00200}00200   \}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00201}00201   \textcolor{comment}{// setup constraints bounds}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00202}00202   std::vector<double> g\_lb(\mbox{\hyperlink{classfdpot_1_1_fd_pot_a7181ba733b0839596f0880e3d6eb3754}{n\_constrs}}.first + \mbox{\hyperlink{classfdpot_1_1_fd_pot_a7181ba733b0839596f0880e3d6eb3754}{n\_constrs}}.second),}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00203}00203     g\_ub(\mbox{\hyperlink{classfdpot_1_1_fd_pot_a7181ba733b0839596f0880e3d6eb3754}{n\_constrs}}.first + \mbox{\hyperlink{classfdpot_1_1_fd_pot_a7181ba733b0839596f0880e3d6eb3754}{n\_constrs}}.second);}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00204}00204   }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00205}00205   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} c = 0; c < \mbox{\hyperlink{classfdpot_1_1_fd_pot_a7181ba733b0839596f0880e3d6eb3754}{n\_constrs}}.first; c++)\{}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00206}00206     g\_lb[c] = 1.; }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00207}00207     g\_ub[c] = 1.;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00208}00208   \}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00209}00209   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} c = \mbox{\hyperlink{classfdpot_1_1_fd_pot_a7181ba733b0839596f0880e3d6eb3754}{n\_constrs}}.first; c < g\_ub.size(); c++)\{}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00210}00210     g\_lb[c] = 1.;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00211}00211     g\_ub[c] = 1.0e19; \textcolor{comment}{// no upper bound}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00212}00212   \}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00213}00213   this-\/>\mbox{\hyperlink{classfdpot_1_1_fd_pot_ac767b3f7803b53bb30f95a4d8c386744}{optimiser}}-\/>set\_math\_program(this-\/>\mbox{\hyperlink{classfdpot_1_1_fd_pot_a1f658b6eccd04a55f5aea19aef65965a}{create\_mathematical\_model}}(y, X\_coeff),}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00214}00214                                     std::move(vars\_lb), std::move(vars\_ub),}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00215}00215                                     std::move(g\_lb), std::move(g\_ub)}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00216}00216                                     );}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00217}00217 \}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00218}00218 }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00219}00219 }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00220}\mbox{\hyperlink{classfdpot_1_1_fd_pot_a8206c226e91c37e96d149caa01251f84}{00220}} \textcolor{keywordtype}{void} \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8206c226e91c37e96d149caa01251f84}{FdPot::initialise\_vars}}(std::uint32\_t seed, \mbox{\hyperlink{structfdpot_1_1_optim_traits_a7d43e2009f8fa8c83d48d7994b90e5c6}{Dvector}} \& vars)\{}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00221}00221   std::mt19937 engine\{\mbox{\hyperlink{classfdpot_1_1_fd_pot_ae79cda7726fcef91de1b5b2a97f31eed}{seed}}\};}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00222}00222   dirichlet\_distribution<std::mt19937> }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00223}00223     dirichlet\_distrib( std::vector<double>(\mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_labels, 1.) );}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00224}00224   }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00225}00225   \textcolor{comment}{// fill the vector of variables}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00226}00226   \textcolor{comment}{// dirichlet for the leaf node variables (must sum to 1)}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00227}00227   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} leaf = \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_int\_nodes; }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00228}00228        leaf < orct\_ptr-\/>n\_int\_nodes + \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_leaf\_nodes; leaf++)\{}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00229}00229     }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00230}00230     \textcolor{keywordtype}{unsigned} first\_idx = \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>var\_map(leaf);}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00231}00231     \textcolor{comment}{// sample}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00232}00232     std::vector<double> sample = dirichlet\_distrib(engine);}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00233}00233 \textcolor{preprocessor}{\#ifndef MYNDEBUG}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00234}00234     std::cout << \textcolor{stringliteral}{"{}Printing dirichlet sample for leaf "{}} << leaf << \textcolor{stringliteral}{"{} of\(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00235}00235 \textcolor{stringliteral}{    sample of length "{}} << sample.size() << std::endl;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00236}00236 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00237}00237 \textcolor{preprocessor}{\#ifndef DEV}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00238}00238     Rcpp::Rcout << \textcolor{stringliteral}{"{}Printing dirichlet sample for leaf "{}} << leaf << \textcolor{stringliteral}{"{} of\(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00239}00239 \textcolor{stringliteral}{    sample of length "{}} << sample.size() << std::endl;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00240}00240 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00241}00241     \textcolor{comment}{// now fill the leaf variables}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00242}00242     \textcolor{keywordtype}{unsigned} i = 0;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00243}00243     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} k= first\_idx; k < first\_idx + \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_labels; k++)\{}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00244}00244             vars.at(k) = sample.at(i++);}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00245}00245 \textcolor{preprocessor}{    \#ifndef MYNDEBUG}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00246}00246       std::cout << vars.at(k) << \textcolor{stringliteral}{"{}\(\backslash\)t"{}};}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00247}00247 \textcolor{preprocessor}{    \#endif}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00248}00248     \}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00249}00249 \textcolor{preprocessor}{    \#ifndef MYNDEBUG }}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00250}00250     std::cout<< std::endl;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00251}00251 \textcolor{preprocessor}{    \#endif}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00252}00252   \}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00253}00253   \textcolor{comment}{// uniform for all other parameters}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00254}00254   std::uniform\_real\_distribution<> uniform\_distrib(0, 1);  \textcolor{comment}{// set up distrib}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00255}00255   }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00256}00256   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} node = 0; node < \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_int\_nodes; node++)\{}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00257}00257     \textcolor{keywordtype}{unsigned} first\_idx = \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>var\_map(node);}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00258}00258     }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00259}00259 \textcolor{preprocessor}{  \#ifdef MYNDEBUG}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00260}00260     std::cout << \textcolor{stringliteral}{"{}Printing variables for node "{}} << node << \textcolor{stringliteral}{"{} whose\(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00261}00261 \textcolor{stringliteral}{    starting index in the vars vector is "{}} << first\_idx << std::endl;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00262}00262 \textcolor{preprocessor}{  \#endif}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00263}00263     \textcolor{comment}{// we have n\_feats + 1 variables per interior node}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00264}00264     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} j = first\_idx; j < first\_idx + (\mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_feats + 1); j++)\{}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00265}00265       vars.at(j) = uniform\_distrib(engine);}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00266}00266 \textcolor{preprocessor}{      \#ifndef MYNDEBUG}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00267}00267         std::cout<< vars.at(j) << \textcolor{stringliteral}{"{}\(\backslash\)t"{}};}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00268}00268 \textcolor{preprocessor}{      \#endif}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00269}00269     \}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00270}00270 \textcolor{preprocessor}{    \#ifndef MYNDEBUG}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00271}00271       std::cout << std::endl;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00272}00272 \textcolor{preprocessor}{    \#endif}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00273}00273   \}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00274}00274 \}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00275}00275   }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00276}\mbox{\hyperlink{classfdpot_1_1_fd_pot_a962a7d85da79db2fd55f6fd29ff033b0}{00276}} Rcpp::List \mbox{\hyperlink{classfdpot_1_1_fd_pot_a962a7d85da79db2fd55f6fd29ff033b0}{FdPot::solve\_trees}}(\textcolor{keywordtype}{void})\{}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00277}00277   \textcolor{comment}{// create the random seeds}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00278}00278   std::vector<unsigned> seeds(this-\/>\mbox{\hyperlink{classfdpot_1_1_fd_pot_a246ab6b0510387d904ef3e9bdd8d615e}{n\_sols}});  \textcolor{comment}{// setup seeds vector}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00279}00279   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} i = 0; i < this-\/>\mbox{\hyperlink{classfdpot_1_1_fd_pot_a246ab6b0510387d904ef3e9bdd8d615e}{n\_sols}}; i++)}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00280}00280     seeds.at(i) = this-\/>\mbox{\hyperlink{classfdpot_1_1_fd_pot_ae79cda7726fcef91de1b5b2a97f31eed}{seed}} + i;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00281}00281   std::seed\_seq seq(\{this-\/>\mbox{\hyperlink{classfdpot_1_1_fd_pot_ae79cda7726fcef91de1b5b2a97f31eed}{seed}}\});}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00282}00282   seq.generate(seeds.begin(), seeds.end());}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00283}00283   }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00284}00284   \textcolor{comment}{// prepare results variable}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00285}00285   \mbox{\hyperlink{struct_fd_pot_results}{FdPotResults}} results(this-\/>n\_sols, \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_vars);}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00286}00286   }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00287}00287   \textcolor{comment}{// TODO important pragma}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00288}00288   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} m = 0; m < \mbox{\hyperlink{classfdpot_1_1_fd_pot_a246ab6b0510387d904ef3e9bdd8d615e}{n\_sols}}; m++)\{}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00289}00289     \textcolor{comment}{// initialise the current optimisation handler}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00290}00290     \textcolor{comment}{// NB the copy constructor is used since the structure is the same}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00291}00291     \textcolor{comment}{// for std::move another variable would have to be used; the gained efficiency}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00292}00292     \textcolor{comment}{// was not worth the "{}ugly"{} code in my opinion}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00293}00293     \textcolor{keyword}{auto} cur\_optim\_hdler = \mbox{\hyperlink{structfdpot_1_1_optim_handler}{OptimHandler}}(*(this-\/>\mbox{\hyperlink{classfdpot_1_1_fd_pot_ac767b3f7803b53bb30f95a4d8c386744}{optimiser}}));  }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00294}00294     }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00295}00295     \textcolor{comment}{// initialise variables with current seed}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00296}00296     this-\/>\mbox{\hyperlink{classfdpot_1_1_fd_pot_a8206c226e91c37e96d149caa01251f84}{initialise\_vars}}(seeds.at(m), cur\_optim\_hdler.variables);}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00297}00297     \textcolor{comment}{// perform the optimisation}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00298}00298     cur\_optim\_hdler.solve();}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00299}00299     results.\mbox{\hyperlink{struct_fd_pot_results_a0e6e633fbc9ec88a296333dca0725f17}{all\_variables}}.col(m) = std::move(cur\_optim\_hdler.solution.x);}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00300}00300 }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00301}00301     \textcolor{comment}{//results.cost\_func\_vals(m) = \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00302}00302 \textcolor{comment}{      //CppAD::Value(this-\/>cost\_func(cur\_optim\_hdler.variables));}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00303}00303     }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00304}00304     \textcolor{comment}{//results.penalty\_func\_vals(m) = \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00305}00305 \textcolor{comment}{      //CppAD::Value(this-\/>penalty\_func(cur\_optim\_hdler.variables));}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00306}00306     }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00307}00307     results.\mbox{\hyperlink{struct_fd_pot_results_ab36e8deafb522dc082868b6fba72df58}{obj\_func\_vals}}(m) =  cur\_optim\_hdler.solution.obj\_value;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00308}00308 \textcolor{preprocessor}{  \#ifndef MYNDEBUG}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00309}00309       std::cout << \textcolor{stringliteral}{"{}Solution "{}} << m << \textcolor{stringliteral}{"{} with value "{}} <<}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00310}00310         cur\_optim\_hdler.solution.obj\_value <<std::endl;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00311}00311 \textcolor{preprocessor}{  \#endif}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00312}00312 \}  \textcolor{comment}{// end for}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00313}00313   \textcolor{keywordtype}{unsigned} best\_idx = std::distance(results.\mbox{\hyperlink{struct_fd_pot_results_ab36e8deafb522dc082868b6fba72df58}{obj\_func\_vals}}.cbegin(), }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00314}00314                                     std::min\_element(}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00315}00315                                        results.\mbox{\hyperlink{struct_fd_pot_results_ab36e8deafb522dc082868b6fba72df58}{obj\_func\_vals}}.cbegin(),}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00316}00316                                        results.\mbox{\hyperlink{struct_fd_pot_results_ab36e8deafb522dc082868b6fba72df58}{obj\_func\_vals}}.cend()}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00317}00317                                                     )}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00318}00318                                       );}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00319}00319 \textcolor{preprocessor}{\#ifndef MYNDEBUG}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00320}00320   std::cout << \textcolor{stringliteral}{"{}Sending out solutions list "{}}  << std::endl;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00321}00321   std::cout << \textcolor{stringliteral}{"{}Depth: "{}} <<  \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>depth << std::endl;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00322}00322   std::cout << \textcolor{stringliteral}{"{}n\_feats: "{}} <<  \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_feats << std::endl;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00323}00323   std::cout << \textcolor{stringliteral}{"{}n\_labels: "{}} <<  \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_labels << std::endl;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00324}00324   std::cout << \textcolor{stringliteral}{"{}best\_idx: "{}} <<  best\_idx << std::endl;}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00325}00325 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00326}00326     }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00327}00327   \textcolor{keywordflow}{return} Rcpp::List::create(}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00328}00328     \_(\textcolor{stringliteral}{"{}depth"{}}) = \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>depth,}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00329}00329     \_(\textcolor{stringliteral}{"{}n\_feats"{}}) = \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_feats,}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00330}00330     \_(\textcolor{stringliteral}{"{}n\_labels"{}}) = \mbox{\hyperlink{classfdpot_1_1_fd_pot_a8adf894230c9db011230076afb0201b7}{orct\_ptr}}-\/>n\_labels,}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00331}00331     \_(\textcolor{stringliteral}{"{}best\_tree\_idx"{}}) =  best\_idx,}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00332}00332     \_(\textcolor{stringliteral}{"{}obj\_func\_vals"{}}) = results.\mbox{\hyperlink{struct_fd_pot_results_ab36e8deafb522dc082868b6fba72df58}{obj\_func\_vals}},}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00333}00333     \_(\textcolor{stringliteral}{"{}all\_variables"{}}) = results.\mbox{\hyperlink{struct_fd_pot_results_a0e6e633fbc9ec88a296333dca0725f17}{all\_variables}},}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00334}00334     \_(\textcolor{stringliteral}{"{}best\_variables"{}}) = results.\mbox{\hyperlink{struct_fd_pot_results_a7b4cb740b161ca6ffe6b3ac5d77e3868}{best\_variables}}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00335}00335     }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00336}00336     \textcolor{comment}{// \_("{}obj\_func\_vals"{}) = std::move(results.best\_variables)}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00337}00337     \textcolor{comment}{//\_["{}cost\_func\_vals"{}] = arma::vec(this-\/>n\_sols) ,}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00338}00338    \textcolor{comment}{// \_["{}penalty\_func\_vals"{}] = arma::vec(this-\/>n\_sols),}}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00339}00339   );}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00340}00340 \};}
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00341}00341 }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00342}00342 }
+\DoxyCodeLine{\Hypertarget{_fd_pot_8cpp_source_l00343}00343 }
+
+\end{DoxyCode}

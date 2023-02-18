@@ -1,0 +1,129 @@
+\hypertarget{_o_r_c_t_8h_source}{}\doxysection{ORCT.\+h}
+\mbox{\hyperlink{_o_r_c_t_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00001}00001 \textcolor{preprocessor}{\#ifndef ORCT\_hh}}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00002}00002 \textcolor{preprocessor}{\#define ORCT\_hh}}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00003}00003 \textcolor{comment}{// Note structure and var map depend on n\_feats and depth}}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00004}00004 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{helpers_8h}{helpers.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00005}00005 \textcolor{preprocessor}{\#include <functional>}}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00006}00006 \textcolor{preprocessor}{\#include <iostream>} }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00007}00007 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00008}00008 \textcolor{preprocessor}{\#include "{}RcppArmadillo.h"{}}}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00009}00009 }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00010}00010 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespacefdpot}{fdpot}}\{}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00011}00011 }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00018}\mbox{\hyperlink{structfdpot_1_1_o_r_c_t}{00018}} \textcolor{keyword}{struct }\mbox{\hyperlink{structfdpot_1_1_o_r_c_t}{ORCT}}\{}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00025}\mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a1f75fd113eb068640ba071f89051d4ed}{00025}}   \textcolor{keyword}{using }\mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a1f75fd113eb068640ba071f89051d4ed}{StructureT}}=std::vector< std::pair<std::vector<unsigned>, std::vector<unsigned>> >;}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00026}\mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a1274a26a9b2166c3a7559968cadc7088}{00026}}   \textcolor{keyword}{using }\mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a1274a26a9b2166c3a7559968cadc7088}{TreeInfoT}}=std::vector<double>;}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00027}00027   }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00028}00028   }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00039}\mbox{\hyperlink{structfdpot_1_1_o_r_c_t_af603b807839b9da51661a69b1a43f04a}{00039}}   \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_af603b807839b9da51661a69b1a43f04a}{ORCT}}(\textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} depth\_, \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} n\_feats\_, \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} n\_labels\_,}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00040}00040        \textcolor{keyword}{const} \textcolor{keywordtype}{double} gamma\_=512):}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00041}00041     \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_abd371e5e2d9bceb3a4d68aabf47baca9}{depth}}(depth\_), \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a83265e5dbf28623c7ea980d7785548e0}{n\_labels}}(n\_labels\_), \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a1600234ee4806db06cf6e0d5d2d90b44}{gamma}}(gamma\_)\{}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00042}00042     this-\/>\mbox{\hyperlink{structfdpot_1_1_o_r_c_t_af4178d8704ab05d9ffd99debc4a06dae}{n\_nodes}} = \mbox{\hyperlink{namespacehelpers_a331b84e490c38d25e36a9738d0c809c5}{helpers::n\_nodes}}(\mbox{\hyperlink{structfdpot_1_1_o_r_c_t_abd371e5e2d9bceb3a4d68aabf47baca9}{depth}});}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00043}00043     this-\/>\mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a1995a043069138ea8e93532049d85fd8}{n\_leaf\_nodes}} = this-\/>\mbox{\hyperlink{structfdpot_1_1_o_r_c_t_af4178d8704ab05d9ffd99debc4a06dae}{n\_nodes}} -\/ \mbox{\hyperlink{namespacehelpers_a331b84e490c38d25e36a9738d0c809c5}{helpers::n\_nodes}}(\mbox{\hyperlink{structfdpot_1_1_o_r_c_t_abd371e5e2d9bceb3a4d68aabf47baca9}{depth}} -\/ 1);}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00044}00044     this-\/>\mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a3b9847e0b97fae8a6fed7ca1fdff8aab}{n\_int\_nodes}} = \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_af4178d8704ab05d9ffd99debc4a06dae}{n\_nodes}} -\/ \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a1995a043069138ea8e93532049d85fd8}{n\_leaf\_nodes}};}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00045}00045     }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00046}00046     this-\/>\mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a8e58ede4ab4994c4abaa469e5f08b629}{create\_structure}}();}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00047}00047   \}}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00048}00048   }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00055}00055   \textcolor{keywordtype}{void} \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a8e58ede4ab4994c4abaa469e5f08b629}{create\_structure}}(\textcolor{keywordtype}{void}); \textcolor{comment}{// }}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00056}00056   }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00057}\mbox{\hyperlink{structfdpot_1_1_o_r_c_t_abd371e5e2d9bceb3a4d68aabf47baca9}{00057}}   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_abd371e5e2d9bceb3a4d68aabf47baca9}{depth}};}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00058}\mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a1600234ee4806db06cf6e0d5d2d90b44}{00058}}   \textcolor{keywordtype}{double} \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a1600234ee4806db06cf6e0d5d2d90b44}{gamma}}\{512.\};}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00059}00059   \textcolor{comment}{// note they could (or should) be made const but I woud have to rewrite the constructor}}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00060}00060   \textcolor{comment}{// in the cpp file TODO}}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00061}\mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a3b9847e0b97fae8a6fed7ca1fdff8aab}{00061}}   \textcolor{keywordtype}{unsigned} \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_af4178d8704ab05d9ffd99debc4a06dae}{n\_nodes}} = 0, \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a83265e5dbf28623c7ea980d7785548e0}{n\_labels}} = 0, \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a1995a043069138ea8e93532049d85fd8}{n\_leaf\_nodes}} = 0, \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a3b9847e0b97fae8a6fed7ca1fdff8aab}{n\_int\_nodes}} = 0, }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00062}\mbox{\hyperlink{structfdpot_1_1_o_r_c_t_af2d818bcdbfc9b54fab21f2674822dc8}{00062}}     \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_af2d818bcdbfc9b54fab21f2674822dc8}{n\_feats}} = 0, \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_ae39e6959e7ccf3954be6cd74897e088f}{n\_samples}} = 0,\mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a199bfd123a46a8606a5f5ed7f3dbe603}{n\_vars}} = 0u;}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00063}00063   }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00076}\mbox{\hyperlink{structfdpot_1_1_o_r_c_t_aea36b9a2c26fa30a7741813c1f312ca6}{00076}}   \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a1f75fd113eb068640ba071f89051d4ed}{StructureT}} \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_aea36b9a2c26fa30a7741813c1f312ca6}{structure}};}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00077}00077   }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00078}00078   \textcolor{comment}{/* @brief the bijection of variable }}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00079}00079 \textcolor{comment}{   Maps each node index tau (unsigned) to the index of the first variable}}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00080}00080 \textcolor{comment}{   of such node in the Var}}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00081}00081 \textcolor{comment}{   @note it is a function pointer since it is completed in the create\_structure()}}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00082}00082 \textcolor{comment}{   method}}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00083}00083 \textcolor{comment}{   */}}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00084}\mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a74496faeecfc9bff31a63ef104cf0506}{00084}}   std::function<unsigned(\textcolor{keywordtype}{unsigned})> \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a74496faeecfc9bff31a63ef104cf0506}{var\_map}} = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00085}00085   }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00086}00086   \textcolor{comment}{/* @brief computes the cumulative distribution function}}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00087}00087 \textcolor{comment}{   * }}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00088}00088 \textcolor{comment}{   * Computes the cumulative distribution function value}}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00089}00089 \textcolor{comment}{   * @tparam VarT the variable type. In this library, two different types are used:}}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00090}00090 \textcolor{comment}{   * the ADdouble one (for CppAD compatibility for optimisation, see FdPot.cpp) and double for the }}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00091}00091 \textcolor{comment}{   * predict method (see TODO)}}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00092}00092 \textcolor{comment}{   * }}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00093}00093 \textcolor{comment}{   * @param x: the value at which we want to compute the cdf; in the ORCT it is }}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00094}00094 \textcolor{comment}{   * the dot product of the features in a node and its variables plus the intercept}}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00095}00095 \textcolor{comment}{   *  @note See the report }}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00096}00096 \textcolor{comment}{   */}}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00097}00097   \textcolor{keyword}{template}<\textcolor{keyword}{typename} VarT>}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00098}\mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a4c35e0a3e1152aec9ef265dca7ad586c}{00098}}   VarT \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a4c35e0a3e1152aec9ef265dca7ad586c}{cdf}}(\textcolor{keyword}{const} VarT x) \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00099}00099 }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00100}00100   }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00121}00121   \textcolor{keyword}{template}<\textcolor{keyword}{typename} VarVecT> }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00122}00122   \textcolor{keyword}{typename} VarVecT::value\_type \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a52cace4c387df21efc7b036691f9e2a5}{proba\_go\_left}}(\textcolor{keyword}{const} arma::rowvec \& feats, \textcolor{keyword}{const} VarVecT \&vars,}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00123}00123                          \textcolor{keywordtype}{unsigned} tau) \textcolor{keyword}{const}; }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00124}00124   }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00125}00125   \textcolor{keyword}{template}<\textcolor{keyword}{typename} VarVecT>}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00126}00126   \textcolor{keyword}{typename} VarVecT::value\_type \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_ab2071e9a0108d1b5e4b9c571ef14bfb4}{proba\_fall\_leaf}}(\textcolor{keyword}{const} arma::rowvec\&, \textcolor{keyword}{const} VarVecT \& vars,}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00127}00127                            \textcolor{keywordtype}{unsigned} tau) \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00128}00128   }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00129}\mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a2001ce393936e72bd98fe94e828060c6}{00129}}   \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a2001ce393936e72bd98fe94e828060c6}{predict}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00130}\mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a98e5dee6281f85f650918d4418723782}{00130}}   \textcolor{keywordtype}{double} \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a98e5dee6281f85f650918d4418723782}{predict}}(\textcolor{keyword}{const} \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a1f75fd113eb068640ba071f89051d4ed}{StructureT}}\&, \textcolor{keyword}{const} arma::vec\& vars) \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00131}00131 }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00132}00132   }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00133}00133   }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00134}00134 \};}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00135}00135 }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00136}00136 \textcolor{comment}{// TODO clarify why I did not use constexpr template for exp.}}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00137}00137 }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00138}00138 }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00139}00139 }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00140}00140 \textcolor{keyword}{template}<\textcolor{keyword}{typename} VarVecT>}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00141}\mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a52cace4c387df21efc7b036691f9e2a5}{00141}} \textcolor{keyword}{typename} VarVecT::value\_type \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a52cace4c387df21efc7b036691f9e2a5}{ORCT::proba\_go\_left}}(\textcolor{keyword}{const} arma::rowvec \& feats,  \textcolor{comment}{// TODO if vec}}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00142}00142                              \textcolor{keyword}{const} VarVecT \& vars,\textcolor{keywordtype}{unsigned} tau)\textcolor{keyword}{ const}\{}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00143}00143   \textcolor{keyword}{using }VarT = \textcolor{keyword}{typename} VarVecT::value\_type;}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00144}00144   VarT val = 0.;}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00145}00145   }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00146}00146   \textcolor{comment}{// assert tau does not belong to last level}}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00147}00147   \textcolor{keywordtype}{unsigned} var\_idx = this-\/>\mbox{\hyperlink{structfdpot_1_1_o_r_c_t_a74496faeecfc9bff31a63ef104cf0506}{var\_map}}(tau); }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00148}00148   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} i = 0; i < feats.n\_elem; i++)\{  \textcolor{comment}{// perform dot product}}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00149}00149     val += feats(i) * (vars[var\_idx++]);  \textcolor{comment}{// cannot use iterators with pragma (dependent)}}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00150}00150   \}}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00151}00151   \textcolor{comment}{// normalise by number of features}}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00152}00152   val /= feats.n\_elem; }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00153}00153   \textcolor{comment}{// subtract the mu variable}}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00154}00154   val -\/= vars[var\_idx];}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00155}00155   \textcolor{keywordflow}{return} cdf<VarT>(val);}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00156}00156   }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00157}00157 \}}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00158}00158 }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00159}00159 \textcolor{keyword}{template}<\textcolor{keyword}{typename} VarVecT>}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00160}\mbox{\hyperlink{structfdpot_1_1_o_r_c_t_ab2071e9a0108d1b5e4b9c571ef14bfb4}{00160}} \textcolor{keyword}{typename} VarVecT::value\_type \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_ab2071e9a0108d1b5e4b9c571ef14bfb4}{ORCT::proba\_fall\_leaf}}(\textcolor{keyword}{const} arma::rowvec\& feats,}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00161}00161                                           \textcolor{keyword}{const} VarVecT \& vars,}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00162}00162                                           \textcolor{keywordtype}{unsigned} tau)\textcolor{keyword}{ const}\{}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00163}00163   \textcolor{keyword}{using }VarT = \textcolor{keyword}{typename} VarVecT::value\_type;}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00164}00164   }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00165}00165 \textcolor{preprocessor}{\#ifndef NDEBUG}}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00166}00166   assert(tau >= \mbox{\hyperlink{namespacehelpers_a331b84e490c38d25e36a9738d0c809c5}{helpers::n\_nodes}}(\mbox{\hyperlink{structfdpot_1_1_o_r_c_t_abd371e5e2d9bceb3a4d68aabf47baca9}{depth}} -\/ 1) and tau < this-\/>\mbox{\hyperlink{structfdpot_1_1_o_r_c_t_af4178d8704ab05d9ffd99debc4a06dae}{n\_nodes}} );}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00167}00167 \textcolor{preprocessor}{\#endif }}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00168}00168   }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00169}00169   \textcolor{keyword}{auto}\& leaf = \mbox{\hyperlink{structfdpot_1_1_o_r_c_t_aea36b9a2c26fa30a7741813c1f312ca6}{structure}}[tau];}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00170}00170   VarT proba = 1.;}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00171}00171   }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00172}00172   \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} l: leaf.first)}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00173}00173     proba *= proba\_go\_left<VarVecT>(feats, vars, l);}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00174}00174   \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} r: leaf.second)}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00175}00175     proba *= (1 -\/ proba\_go\_left<VarVecT>(feats, vars, r));}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00176}00176   }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00177}00177   \textcolor{keywordflow}{return} proba;  }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00178}00178   }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00179}00179   }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00180}00180 \}}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00181}00181 }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00182}00182 \}  \textcolor{comment}{// namespace fdpot}}
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00183}00183 }
+\DoxyCodeLine{\Hypertarget{_o_r_c_t_8h_source_l00184}00184 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// of the ORCT header file}}
+
+\end{DoxyCode}
