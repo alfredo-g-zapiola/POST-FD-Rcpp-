@@ -1,0 +1,3 @@
+[submodule "inst/dirichlet-cpp"]
+	path = inst/dirichlet-cpp
+	url = https://github.com/gcant/dirichlet-cpp
