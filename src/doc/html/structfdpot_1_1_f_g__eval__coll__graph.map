@@ -1,5 +1,0 @@
-<map id="fdpot::FG_eval" name="fdpot::FG_eval">
-<area shape="rect" id="node1" title=" " alt="" coords="33,152,141,177"/>
-<area shape="rect" id="node2" href="$classfdpot_1_1_abstract___f_g__eval.html" title="An abstract class to evaluate function and gradients." alt="" coords="5,79,169,104"/>
-<area shape="rect" id="node3" href="$structfdpot_1_1_optim_traits.html" title="Keeps the types for optimisation." alt="" coords="24,5,151,31"/>
-</map>
