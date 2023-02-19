@@ -1,8 +1,12 @@
 ## Installation instructions
 Assuming you have already installed R on your system:
 0. Clone this repo and "cd" inside it.
-1. Make sure Ipopt is installed: for a tutorial go [here](https://coin-or.github.io/Ipopt/INSTALL.html), 
-2. Make sure CppAD is installed, instructions [here](https://coin-or.github.io/CppAD/doc/install.htm). **Important: remember to add the option `-D include_ipopt=true` at step 2**.
+1. Make sure Ipopt is installed: for a tutorial go [here](https://coin-or.github.io/Ipopt/INSTALL.html). If you are using **arch linux**, you can simply run `yay -S coin-or-ipopt`
+2. Make sure CppAD is installed, instructions [here](https://coin-or.github.io/CppAD/doc/install.htm). 
+<br>
+I recommend you perform the  `git clone ` command in the working directory of this project, since you might have to modify the -I directive in the `src/Makevars` file otherwise.
+<br>
+**Important: remember to add the option `-D include_ipopt=true` at step 2**.
 
 3. Compile and install the quadrature library provided by **pacs-examples** (see the repo for requirements)
   * Go to `$(PACS_ROOT)/src/QuadratuleRule 

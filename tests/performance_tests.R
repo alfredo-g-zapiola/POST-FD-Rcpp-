@@ -5,9 +5,9 @@ library(microbenchmark)
 # test 1: efficiency of the integrals
 #====
 # read data
-df.X <- read.csv("X_canada.csv", header = F)
-y <- read.csv("y_canada.csv", header=F)
-train.idx <- as.matrix(read.csv("train_indices.csv", header=F))
+df.X <- read.csv("data/X_canada.csv", header = F)
+y <- read.csv("data/y_canada.csv", header=F)
+train.idx <- as.matrix(read.csv("data/train_indices.csv", header=F))
 X.train <- df.X[train.idx,]
 df.X <- t(df.X)
 X.train <- t(X.train)
@@ -64,13 +64,15 @@ plot(x=test_n, y=rationes2, col="red", type="b", main="Efficiency of Rcpp integr
 #====
 # load data
 # call microbenchmark NB CANNOT RUN SINCE R aborts it whenever num_threads > 1
-microbenchmark(
-  "compute_dissim_and_feats" = FdPot::test_case_compute_dissim_and_feats(X_coeffs=Xsp$fd$coefs,
-                                            X_argvals=Xsp$argvals, 
-                                            X_basis_df=Xsp$df,
-                                            X_basis_degree=degree, 
-                                            n_feats = 4)
-  )
+# Iif you want to run this, compile commenting out the -D PARALLEL option
+#in the Makevars
+#microbenchmark(
+ # "compute_dissim_and_feats" = FdPot::test_case_compute_dissim_and_feats(X_coeffs=Xsp$fd$coefs,
+  #                                          X_argvals=Xsp$argvals, 
+ #                                           X_basis_df=Xsp$df,
+#                                            X_basis_degree=degree, 
+#                                            n_feats = 4)
+#  )
 #}
 # run this manually 15 times
 a <- numeric(15)
@@ -84,6 +86,6 @@ FdPot::test_case_compute_dissim_and_feats(X_coeffs=Xsp$fd$coefs,
 )
 end.time <- Sys.time()
 a[10] <- end.time - start.time
-time.taken
+
    
 

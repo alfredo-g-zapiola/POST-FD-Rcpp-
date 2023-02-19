@@ -1,4 +1,9 @@
+# TO BE ADJUSTED BEFORE INSTALLATION IF NECESSARY:
+CPPAD_LIB_DIR ?= /usr/local/lib/ # the default directory 
+PACS_ROOT ?= /home/alfredo/Documents/Polimi/PACS/pacs-examples/Examples
+mkOpenBlasLib ?= # see INSTALL, you can leave it blank
 
+## The following lines were created automatically by Rcpp
 ## With R 3.1.0 or later, you can uncomment the following line to tell R to 
 ## enable compilation with C++11 (where available)
 ##
@@ -9,8 +14,9 @@
 ## And with R 3.4.0, and RcppArmadillo 0.7.960.*, we turn C++11 on as OpenMP
 ## support within Armadillo prefers / re	quires it
 CXX_STD = CXX17
-PACS_ROOT ?= /home/alfredo/Documents/Polimi/PACS/pacs-examples/Examples
-DEV ?= -D DEV -D ARMA_NO_DEBUG  -D MYNDEBUG
+# debugging flags
+DEV ?= -D ARMA_NO_DEBUG  -D MYNDEBUG -D PARALLELO #-D DEV used in development 
+
 ## Start of different libraries and locations Section
 # i. PACS lib
 PACS_INC_DIR = $(PACS_ROOT)/include
@@ -24,7 +30,7 @@ DIRICHLET_INC_DIR = ../inst/dirichlet-cpp
 OPENBLAS_LIBS = -L${mkOpenBlasLib} -lopenblas	
 
 # iv. Cppad
-CPPAD_LIB_DIR = /usr/local/lib/ 
+
 CPPAD_LIB =  -L$(CPPAD_LIB_DIR)  -Wl,-rpath,$(CPPAD_LIB_DIR) -lcppad_lib -lcppad_ipopt -lipopt 
 
 
@@ -51,11 +57,12 @@ PKG_CPPFLAGS += $(INCLS) $(DEV)
 #ALL_LIB_DIR=$(PACS_LIB_DIR) $(OTHER_LIB_DIR)
 #LIB := $(foreach lib,$(ALL_LIB_DIR),-L$(lib) )
 
-PKG_CXXFLAGS = $(SHLIB_OPENMP_CXXFLAGS) -lpthread
+PKG_CXXFLAGS = $(SHLIB_OPENMP_CXXFLAGS) #-lpthread
 
 # 3. Linker options (set through PKG_LIBS in R packages)
 # $(SHLIB_OPENMP_CXXFLAGS)
 PKG_LIBS =   $(SHLIB_OPENMP_CXXFLAGS) $(FLIBS) $(OPENBLAS_LIBS) $(PACS_LIB) $(CPPAD_LIB) 
+#PKG_LIBS =   $(SHLIB_OPENMP_CXXFLAGS) $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)$(FLIBS) $(PACS_LIB) $(CPPAD_LIB) 
 
 
 # load dynamicallyob

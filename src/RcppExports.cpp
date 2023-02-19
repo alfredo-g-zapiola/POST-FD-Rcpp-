@@ -35,21 +35,69 @@ BEGIN_RCPP
 END_RCPP
 }
 // predict_FdPot_Rcpp
-Rcpp::List predict_FdPot_Rcpp(const Rcpp::List& fitted_tree, const arma::mat& X_coefs);
-RcppExport SEXP _FdPot_predict_FdPot_Rcpp(SEXP fitted_treeSEXP, SEXP X_coefsSEXP) {
+Rcpp::List predict_FdPot_Rcpp(const Rcpp::List& fitted_tree, const arma::mat& X_coefs, const unsigned result_idx);
+RcppExport SEXP _FdPot_predict_FdPot_Rcpp(SEXP fitted_treeSEXP, SEXP X_coefsSEXP, SEXP result_idxSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::List& >::type fitted_tree(fitted_treeSEXP);
     Rcpp::traits::input_parameter< const arma::mat& >::type X_coefs(X_coefsSEXP);
-    rcpp_result_gen = Rcpp::wrap(predict_FdPot_Rcpp(fitted_tree, X_coefs));
+    Rcpp::traits::input_parameter< const unsigned >::type result_idx(result_idxSEXP);
+    rcpp_result_gen = Rcpp::wrap(predict_FdPot_Rcpp(fitted_tree, X_coefs, result_idx));
     return rcpp_result_gen;
+END_RCPP
+}
+// compute_func_datum_integral
+arma::mat compute_func_datum_integral(const arma::vec& coefs, const Rcpp::NumericVector& X_argvals, const unsigned basis_df, const unsigned basis_degree, const unsigned n_times);
+RcppExport SEXP _FdPot_compute_func_datum_integral(SEXP coefsSEXP, SEXP X_argvalsSEXP, SEXP basis_dfSEXP, SEXP basis_degreeSEXP, SEXP n_timesSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::vec& >::type coefs(coefsSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type X_argvals(X_argvalsSEXP);
+    Rcpp::traits::input_parameter< const unsigned >::type basis_df(basis_dfSEXP);
+    Rcpp::traits::input_parameter< const unsigned >::type basis_degree(basis_degreeSEXP);
+    Rcpp::traits::input_parameter< const unsigned >::type n_times(n_timesSEXP);
+    rcpp_result_gen = Rcpp::wrap(compute_func_datum_integral(coefs, X_argvals, basis_df, basis_degree, n_times));
+    return rcpp_result_gen;
+END_RCPP
+}
+// get_bspline_internal_knots
+arma::vec get_bspline_internal_knots(const arma::vec& coefs, const Rcpp::NumericVector& X_argvals, const unsigned basis_df, const unsigned basis_degree, const unsigned n_feats);
+RcppExport SEXP _FdPot_get_bspline_internal_knots(SEXP coefsSEXP, SEXP X_argvalsSEXP, SEXP basis_dfSEXP, SEXP basis_degreeSEXP, SEXP n_featsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::vec& >::type coefs(coefsSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type X_argvals(X_argvalsSEXP);
+    Rcpp::traits::input_parameter< const unsigned >::type basis_df(basis_dfSEXP);
+    Rcpp::traits::input_parameter< const unsigned >::type basis_degree(basis_degreeSEXP);
+    Rcpp::traits::input_parameter< const unsigned >::type n_feats(n_featsSEXP);
+    rcpp_result_gen = Rcpp::wrap(get_bspline_internal_knots(coefs, X_argvals, basis_df, basis_degree, n_feats));
+    return rcpp_result_gen;
+END_RCPP
+}
+// test_case_compute_dissim_and_feats
+void test_case_compute_dissim_and_feats(const arma::mat& X_coeffs, const Rcpp::NumericVector& X_argvals, int X_basis_df, int X_basis_degree, unsigned n_feats);
+RcppExport SEXP _FdPot_test_case_compute_dissim_and_feats(SEXP X_coeffsSEXP, SEXP X_argvalsSEXP, SEXP X_basis_dfSEXP, SEXP X_basis_degreeSEXP, SEXP n_featsSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::mat& >::type X_coeffs(X_coeffsSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type X_argvals(X_argvalsSEXP);
+    Rcpp::traits::input_parameter< int >::type X_basis_df(X_basis_dfSEXP);
+    Rcpp::traits::input_parameter< int >::type X_basis_degree(X_basis_degreeSEXP);
+    Rcpp::traits::input_parameter< unsigned >::type n_feats(n_featsSEXP);
+    test_case_compute_dissim_and_feats(X_coeffs, X_argvals, X_basis_df, X_basis_degree, n_feats);
+    return R_NilValue;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
     {"_FdPot_pFdorct_Rcpp", (DL_FUNC) &_FdPot_pFdorct_Rcpp, 13},
-    {"_FdPot_predict_FdPot_Rcpp", (DL_FUNC) &_FdPot_predict_FdPot_Rcpp, 2},
+    {"_FdPot_predict_FdPot_Rcpp", (DL_FUNC) &_FdPot_predict_FdPot_Rcpp, 3},
+    {"_FdPot_compute_func_datum_integral", (DL_FUNC) &_FdPot_compute_func_datum_integral, 5},
+    {"_FdPot_get_bspline_internal_knots", (DL_FUNC) &_FdPot_get_bspline_internal_knots, 5},
+    {"_FdPot_test_case_compute_dissim_and_feats", (DL_FUNC) &_FdPot_test_case_compute_dissim_and_feats, 5},
     {NULL, NULL, 0}
 };
 

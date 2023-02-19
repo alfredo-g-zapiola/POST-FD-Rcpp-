@@ -16,8 +16,8 @@ FdHandler<BasisEnum::BSPLINE>::FdHandler(
 };
 
 double FdHandler<BasisEnum::BSPLINE>::operator()(const arma::mat& coef, 
-                                               unsigned i,
-                                               double t){
+                                               const unsigned i,
+                                               const double t){
   this->basis.set_x(splines2::rvec{t});
   arma::mat basis_eval = this->basis.basis(true); // true to include intercept
   // (basis_eval * coefs_arma).eval()(0,0)
@@ -95,7 +95,7 @@ void FdHandler<BasisEnum::BSPLINE>::compute_basis_integrals(unsigned n_feats){
       // this->quad = Quadrature(Trapezoidal(), meshgen);
       basis_integrals(k, j) = quad.apply(
         [&weight_basis,k,this](double t){
-          return weight_basis(t) * this->basis_function(k)(t);
+          return weight_basis(t) * this->basis_function(k)(t);  // dot product
         }
       );
 #ifndef MYNDEBUG

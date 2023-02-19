@@ -1,11 +1,9 @@
 #include "FdPot.h"
 #include <assert.h>     /* assert */
-// TODO cassert formaggia
 #include <algorithm> // std::min_element
 #include <cmath>
 
 #include <Rcpp.h>
-// [[Rcpp::plugins(openmp)]]
 #include <omp.h>
 
 
@@ -40,7 +38,7 @@ Rcpp::List FdPot::fit(const arma::vec& y, const arma::mat & X_coeff,
   this->n_constrs.first = orct_ptr->n_leaf_nodes;
   // at least one terminal node per class constraints
   this->n_constrs.second  = orct_ptr->n_labels;
-#ifndef DEBUG
+#ifndef MYNDEBUG
   std::cout << "Number of single class per leaf constraints " << n_constrs.first << std::endl;
   std::cout << "Number of termianl node per class " << n_constrs.second << std::endl;
     std::cout << "Computing features" << std::endl;
@@ -94,16 +92,11 @@ OptimTraits::OptimFuns FdPot::create_mathematical_model(const arma::vec& y,
   OptimTraits::OptimFuns f = nullptr;
   
   this->cost_func = [this, &y] (const VariantVarsT& vars) -> ADdouble {
-    /*try {
-      auto vars_ = std::get<OptimTraits::ADvector>(vars); // w contains int, not float: will throw
-    }
-    catch (const std::bad_variant_access& ex) {
-      std::cout << ex.what() << std::endl;
-      auto vars_ = std::get<arma::vec>(vars);
-    }
-    */
+    // I first create the visitor:
+    
+    
     ADdouble e_cost = 0.;
-    // TODO pragma.
+    // note this loop cannot be parallelised since it is the function that Ipopt will use
     for (unsigned i = 0; i < this->n_samples; i++){ // all samples
       for (unsigned leaf = orct_ptr->n_int_nodes; // first leaf comes after int_nodes
               leaf < orct_ptr->n_nodes; leaf++){  // all leafs
@@ -114,11 +107,27 @@ OptimTraits::OptimFuns FdPot::create_mathematical_model(const arma::vec& y,
         unsigned c_kt = orct_ptr->var_map(leaf);
         
         for (unsigned k = 0; k < orct_ptr->n_labels; k ++){
-          // TODO overload for proba_fall_leaf and visit
+          // Sadly, I had to redefine the overloaded visitor at each iteration:
+          auto visitor_add_leaf_c = OverloadedVisitor{
+            [this, &leaf_c,
+             &leaf, &y, &i, &k, &c_kt](const arma::vec& vars){
+              leaf_c += orct_ptr->proba_fall_leaf<arma::vec>(
+                features.row(i), vars, leaf) * this->miss_class_cost(y(i), k) * vars[c_kt++];
+              // decided to use the ARMA_NO_DEBUG macro (TODO add to report)
+            },
+            [this, &leaf_c, &leaf, &y, &i, &k, &c_kt](
+                const OptimTraits::ADvector& vars){
+              leaf_c += orct_ptr->proba_fall_leaf<OptimTraits::ADvector>(
+                this->features.row(i), vars, leaf) *\
+                  this->miss_class_cost(y(i), k) * vars[c_kt++];
+            }
+          };
           
-          leaf_c += orct_ptr->proba_fall_leaf(this->features.row(i), vars, leaf) * 
-            this->miss_class_cost(y(i), k) * vars[c_kt++];
-          // todo use .at once it is checked, since operator() performs bound check
+          
+          //leaf_c += orct_ptr->proba_fall_leaf(this->features.row(i), vars, leaf) * 
+          //  this->miss_class_cost(y(i), k) * vars[c_kt++];
+          std::visit(visitor_add_leaf_c, vars);
+          
         }
         e_cost += leaf_c;
       }
@@ -323,19 +332,28 @@ Rcpp::List FdPot::solve_trees(void){
     
 
     // perform the optimisation
-    cur_optim_hdler.solve();
+    try{
+      cur_optim_hdler.solve();
+    }
+    catch (const std::runtime_error&e){
+      Rcpp::Rcout << e.what() << std::endl;
+      continue;
+    }
+    
     results.all_variables.col(m) = std::move(cur_optim_hdler.solution.x);
 
     auto vars_ad = OptimTraits::ADvector(results.all_variables.col(m).cbegin(),
                                          results.all_variables.col(m).cend());
     
-    results.cost_func_vals(m) = CppAD::Value(this->cost_func(vars_ad));
+    //results.cost_func_vals(m) = CppAD::Value(this->cost_func(vars_ad));
+    results.cost_func_vals(m) = CppAD::Value(this->cost_func(results.all_variables.col(m)));
       //CppAD::Value(*(this->cost_func)(cur_optim_hdler.variables));
 
     //results.penalty_func_vals(m) = \
       //CppAD::Value(this->penalty_func(cur_optim_hdler.variables));
     
     results.obj_func_vals(m) =  cur_optim_hdler.solution.obj_value;
+    Rcpp::checkUserInterrupt();  // check if the user has clicked stop
 
 }  // end for
   //#ifndef MYNDEBUG

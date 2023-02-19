@@ -25,14 +25,14 @@ ifeq ($(DEBUG),no)
   # or ldconfig.
   LDFLAGS=-Wl,-rpath=. -Wl,-rpath=$(PACS_ROOT)/lib#
   OPTFLAGS=-O3 -funroll-loops #maybe you want -O3
-  DEFINES+=-DNDEBUG
+  DEFINES+=-DNDEBUG -D MYNDEBUG
  else
    OPTFLAGS=-g
 # If debugging we use the local dynamic libraries and avoid ldconfig -d
 # or setting LD_LIBRARY_PATH
   LDFLAGS=-Wl,-rpath=. -Wl,-rpath=$(PACS_ROOT)/lib# 
 endif
-CXXFLAGS+=$(OPTFLAGS) -fopenmp -lpthread
+CXXFLAGS+=$(OPTFLAGS) # -fopenmp -lpthread
 
 # Includes 
 
@@ -73,9 +73,7 @@ LDLIBS += -L${PACS_ROOT}/lib -Wl,-rpath,${PACS_ROOT}/lib -lpacs -lquadrature -lM
 
 
 # openmp
-mkTbbInc?=/usr/include
-mkTbbLib?=/usr/lib/x86_64-linux-gnu/
-DEFINES += -fopenmp  -openmp
+#DEFINES += -fopenmp  -openmp
 
 
 # Loader flags
@@ -89,7 +87,7 @@ export LDFLAGS = -Wl,-rpath,/usr/local/lib/
 LINK.o = $(CXX) $(LDFLAGS) $(LDLIBS)
 
 # Warnings
-export WARNFLAGS # = -Wall -Wextra -Wsuggest-override -Wnon-virtual-dtor
+export WARNFLAGS # Note these should not be changed, they are in /etc/R/Makeconf= -Wall -Wextra -Wsuggest-override -Wnon-virtual-dtor
 
 
 export STDFLAGS= -std=c++17
@@ -111,6 +109,13 @@ TEST_SRCS +=  $(filter-out Rcpp_fdpot.cpp RcppExports.cpp, $(wildcard src/*.cpp)
 # get the corresponding object file
 TEST_OBJS = $(TEST_SRCS:.cpp=.o)
 TEST_EXEC=$(TEST_SRCS:.cpp=)
+
+#PARALLEL_TEST_SRCS  = $(filter-out main_tests.cpp, $(wildcard tests/*.cpp))
+#PARALLEL_TEST_SRCS +=  $(filter-out Rcpp_fdpot.cpp RcppExports.cpp, $(wildcard src/*.cpp))
+
+#PARALLEL_TEST_OBJS = $(PARALLEL_TEST_SRCS:.cpp=.o)
+#PARALLEL_TEST_EXEC=$(PARALLEL_TEST_SRCS:.cpp=)
+
 
 all: check clean
 
@@ -149,6 +154,8 @@ docs:
 
 tests: make.dep $(TEST_EXEC) 
 
+
+
 debugging: tests
 	gdb $(TEST_EXEC)
 	
@@ -156,10 +163,12 @@ $(TEST_EXEC): $(TEST_OBJS)
 
 $(TEST_OBJS): $(TEST_SRCS)
 
+
 make.dep: $(TEST_SRCS);
-	echo "Make dep:"	
+	-\rm make.dep	
 	for f in $(TEST_SRCS); do \
 	$(CXX) $(STDFLAGS) $(CPPFLAGS) -MM $$f >> make.dep; \
 	done
 -include make.dep
+
 	

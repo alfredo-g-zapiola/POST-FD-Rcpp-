@@ -4,6 +4,7 @@
 #include <functional>
 #include <memory>
 #include <vector>
+#include <stdexcept>
 
 namespace fdpot{
 class FdPot;  // forward declaration
@@ -164,7 +165,7 @@ public:
     this->xu = std::move(xu);
     this->gl= std::move(gl);
     this->gu= std::move(gu);
-    // TODO options
+    // N.B. options are not defined yet TODO add to report
   }
   /*! @brief perform the optimisation
    
@@ -173,7 +174,7 @@ public:
    * @note options are left as the default ones in the CppAD example,
    * except for the numeric tolerance
    */
-  inline void solve(void){ // TODO assert sizes
+  inline void solve(void){
     // solve the problem
     std::string options;
     // options += "Integer print_level  0\n";  // disable verbose
@@ -198,6 +199,13 @@ public:
         CppAD::ipopt::solve<Dvector, FG_eval>(options, variables, xl, 
                                                       xu, gl, gu, 
                                                       this->fg_eval, solution);
+        
+        if (not (solution.status == CppAD::ipopt::solve_result<Dvector>::success)) {
+        // Commented on purpose, even if it not converges solution may be useful for analysis
+          //throw std::runtime_error("Error: solution status was not success"\
+            //                         "This optimisation will be ignored."\
+              //                       "Proceeding to the next one.");
+        }
   }; 
   
 };

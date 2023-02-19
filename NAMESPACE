@@ -1,0 +1,3 @@
+useDynLib(FdPot, .registration=TRUE)
+importFrom(Rcpp, evalCpp) # imports a callable from R
+exportPattern("^[[:alpha:]]+")

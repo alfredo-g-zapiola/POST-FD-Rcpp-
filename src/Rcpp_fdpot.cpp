@@ -9,6 +9,7 @@
 #include <splines2Armadillo.h>
 #include "FdPot.h"
 #include "helpers.h"
+
   
 #include <functional>
 #include <dlfcn.h>
@@ -59,8 +60,7 @@ Rcpp::List pFdorct_Rcpp(const arma::vec & y,
 // #define MYNDEBUG
 #ifdef MYNDEBUG
    Rcpp::Rcout << "MYNDEBUG defined" << std::endl;
-#endif
-#ifndef MYNDEBUG
+#else
    Rcpp::Rcout << "MYNDEBUG not defined" << std::endl;
 #endif
    
@@ -164,7 +164,8 @@ Rcpp::List pFdorct_Rcpp(const arma::vec & y,
 
 // [[Rcpp::export]]
 Rcpp::List predict_FdPot_Rcpp(const Rcpp::List& fitted_tree,
-                        const arma::mat& X_coefs){
+                        const arma::mat& X_coefs,
+                        const unsigned result_idx){
   Rcpp::List fit_results = Rcpp::as<Rcpp::List>(fitted_tree["fit_results"]);
   // to obtain the features, need the basis
   auto basis = splines2::BSpline(
@@ -178,8 +179,11 @@ Rcpp::List predict_FdPot_Rcpp(const Rcpp::List& fitted_tree,
   auto feats = arma::mat( fd_handler.compute_features(X_coefs, 
                                                       fit_results("n_labels"))
                           );
-  auto vars = Rcpp::as<arma::vec>(fit_results["best_variables"]);// TODO
-  
+  arma::mat all_vars = Rcpp::as<arma::mat>(fit_results["all_variables"]);
+#ifdef DEV
+  Rcpp::Rcout << all_vars.n_rows << " and " << all_var.n_cols<< std::endl
+#endif
+  arma::vec vars = all_vars.col(result_idx);
   // scale features
   FdPot::scale_features(feats);
 #ifndef MYNDEBUG
@@ -194,3 +198,57 @@ Rcpp::List predict_FdPot_Rcpp(const Rcpp::List& fitted_tree,
 
   return tree.predict(feats, vars);
 }
+
+// [[Rcpp::export]]
+arma::mat compute_func_datum_integral(const arma::vec & coefs,
+                                   const Rcpp::NumericVector& X_argvals,
+                                   const unsigned basis_df,
+                                   const unsigned basis_degree,
+                                   const unsigned n_times){
+  
+  arma::vec boundary_knots{ X_argvals[0], X_argvals[X_argvals.size()-1] };
+  
+  auto basis = splines2::BSpline(X_argvals, basis_df, basis_degree,
+                                 boundary_knots);
+  
+  auto fd_handler = FdHandler<BasisEnum::BSPLINE>(std::move(basis));
+  auto a = fd_handler.compute_features(coefs, 1);
+  for (unsigned i = 1; i < n_times; i++)
+      a = fd_handler.compute_features(coefs, 1);
+  
+  return a;
+}
+
+// [[Rcpp::export]]
+arma::vec get_bspline_internal_knots(const arma::vec & coefs,
+                                      const Rcpp::NumericVector& X_argvals,
+                                      const unsigned basis_df,
+                                      const unsigned basis_degree,
+                                      const unsigned n_feats){
+  
+  arma::vec boundary_knots{ X_argvals[0], X_argvals[X_argvals.size()-1] };
+  
+  auto basis = splines2::BSpline(X_argvals, basis_df, basis_degree,
+                                 boundary_knots);
+  return basis.get_internal_knots();
+}
+
+// [[Rcpp::export]]
+void test_case_compute_dissim_and_feats(const arma::mat&  X_coeffs,
+                                             const Rcpp::NumericVector & X_argvals,
+                                             int X_basis_df,
+                                             int X_basis_degree,
+                                             unsigned n_feats = 4){
+
+  arma::vec boundary_knots{ X_argvals[0], X_argvals[X_argvals.size()-1] };
+  // now construct the basis
+  auto basis = splines2::BSpline(X_argvals, X_basis_df, X_basis_degree,
+                                 boundary_knots);
+  FdHandler<BasisEnum::BSPLINE> evalFd(std::move(basis));
+  
+  evalFd.compute_dissim_matrix(X_coeffs);
+  evalFd.compute_features(X_coeffs, n_feats);
+  return;
+
+}
+

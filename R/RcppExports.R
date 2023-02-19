@@ -22,7 +22,19 @@ pFdorct_Rcpp <- function(y, X_coeffs, X_argvals, X_basis_df, X_basis_degree, bas
     .Call(`_FdPot_pFdorct_Rcpp`, y, X_coeffs, X_argvals, X_basis_df, X_basis_degree, basis_type, depth, alpha, similarity_method, n_feats, n_solve, gamma, seed)
 }
 
-predict_FdPot_Rcpp <- function(fitted_tree, X_coefs) {
-    .Call(`_FdPot_predict_FdPot_Rcpp`, fitted_tree, X_coefs)
+predict_FdPot_Rcpp <- function(fitted_tree, X_coefs, result_idx) {
+    .Call(`_FdPot_predict_FdPot_Rcpp`, fitted_tree, X_coefs, result_idx)
+}
+
+compute_func_datum_integral <- function(coefs, X_argvals, basis_df, basis_degree, n_times) {
+    .Call(`_FdPot_compute_func_datum_integral`, coefs, X_argvals, basis_df, basis_degree, n_times)
+}
+
+get_bspline_internal_knots <- function(coefs, X_argvals, basis_df, basis_degree, n_feats) {
+    .Call(`_FdPot_get_bspline_internal_knots`, coefs, X_argvals, basis_df, basis_degree, n_feats)
+}
+
+test_case_compute_dissim_and_feats <- function(X_coeffs, X_argvals, X_basis_df, X_basis_degree, n_feats = 4L) {
+    invisible(.Call(`_FdPot_test_case_compute_dissim_and_feats`, X_coeffs, X_argvals, X_basis_df, X_basis_degree, n_feats))
 }
 

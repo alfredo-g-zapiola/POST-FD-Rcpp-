@@ -34,13 +34,16 @@ void ORCT::create_structure(void){
       // TODO initialise with zeroes to allocate space
       structure[node] = std::make_pair(left_nodes, right_nodes);
       // since we went to the left, j is a left parent node, so update first
-      structure[node].first.push_back(j);  
-      std::cout << "Node " << node  << std::endl;
-      for (const auto v: structure[node].first)
-        std::cout << "left parent value "  << v << std::endl;
-      for (const auto v: structure[node].second)
-        std::cout << "right parent value "  << v << std::endl;
+      structure[node].first.push_back(j);
+      #ifndef MYNDEBUG 
+	      std::cout << "Node " << node  << std::endl;
+	      for (const auto v: structure[node].first)
+		std::cout << "left parent value "  << v << std::endl;
+	      for (const auto v: structure[node].second)
+		std::cout << "right parent value "  << v << std::endl;
+      #endif
       node++;
+      
 
       // go right
       // now we use move since we won't need the vecs anymore, and we save 
@@ -48,11 +51,13 @@ void ORCT::create_structure(void){
       structure[node] = std::make_pair(std::move(left_nodes), std::move(right_nodes));
       // we went to the right, update second
       structure[node].second.push_back(j);
-      std::cout << "Node " << node  << std::endl;
-      for (const auto v: structure[node].first)
-        std::cout << "left parent value "  << v << std::endl;
-      for (const auto v: structure[node].second)
-        std::cout << "right parent value "  << v << std::endl;
+      #ifndef MYNDEBUG 
+		std::cout << "Node " << node  << std::endl;
+		for (const auto v: structure[node].first)
+		std::cout << "left parent value "  << v << std::endl;
+		for (const auto v: structure[node].second)
+		std::cout << "right parent value "  << v << std::endl;
+      #endif
       node++;
       
       // Now we update the var_map: for each node tau maps the index of its first
