@@ -35,7 +35,7 @@ arma::mat FdHandler<BasisEnum::BSPLINE>::compute_dissim_matrix(
 #if defined(PARALLELO) && defined(_OPENMP)
   int threads = omp_get_num_threads();
   Rcpp::Rcout << "open mp active. n threads recognised by default: " << threads << std::endl;
-  Rcpp::Rcout << "note this package has 4 threads hardcoded if openmp enabled" << std::endl;
+  Rcpp::Rcout << "note this package has 1 threads hardcoded if openmp enabled" << std::endl;
 #pragma omp parallel for collapse(2) num_threads(1)
 #endif
   for (unsigned i = 0; i < X_coef.n_cols; i++){

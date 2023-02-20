@@ -6,7 +6,7 @@ Assuming you have already installed R on your system (and also R studio, preferr
 <br>
 I recommend you perform the  `git clone ` command in the working directory of this project, since you might have to modify the -I directive in the `src/Makevars` file otherwise.
 <br>
-**Important: remember to add the option `-D include_ipopt=true` at step 2**.
+**Important: remember to add the option `-D include_ipopt=true` at step 2**, see [here]{https://www.coin-or.org/CppAD/Doc/ipopt_prefix.htm}, else you will get a missing header file..
 
 3. Compile and install the quadrature library provided by **pacs-examples** (see the repo for requirements)
   * Go to `$(PACS_ROOT)/src/QuadratuleRule 
