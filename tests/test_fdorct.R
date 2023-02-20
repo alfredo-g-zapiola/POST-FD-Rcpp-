@@ -35,9 +35,10 @@ a.well <-  pFdorct(y.train, Xsp, degree, depth = 2, alpha = .1, n.solve = 5,
                    n_feats = 4)
 print(paste0("Printing objective function values", 
              a.well$fit_results$obj_func_vals))
-print(paste0("Printing cost function values", 
-             pa.well$fit_results$cost_func_vals))
-predis <- predict_FdPot_Rcpp(a.well, Xsp$fd$coefs, a.well$)
+print("Print cost function value")
+print(a.well$fit_results$cost_func_vals)
+predis <- predict_FdPot_Rcpp(a.well, Xsp$fd$coefs, a.well$fit_results$best_tree_idx)
+predis
 preds = predict.pFdorct(a.well, Xsp)
 sum(preds$predicted_labels_probs[1,])
 vars = a.well$fit_results$best_variables

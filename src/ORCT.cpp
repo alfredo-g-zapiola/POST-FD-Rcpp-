@@ -31,7 +31,7 @@ void ORCT::create_structure(void){
                                               structure[j].first.cend());
       auto right_nodes = std::vector<unsigned>(structure[j].second.cbegin(),
                                                structure[j].second.cend());
-      // TODO initialise with zeroes to allocate space
+      // in the future initialise with zeroes to allocate space
       structure[node] = std::make_pair(left_nodes, right_nodes);
       // since we went to the left, j is a left parent node, so update first
       structure[node].first.push_back(j);

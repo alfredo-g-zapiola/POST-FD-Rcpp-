@@ -113,7 +113,7 @@ OptimTraits::OptimFuns FdPot::create_mathematical_model(const arma::vec& y,
              &leaf, &y, &i, &k, &c_kt](const arma::vec& vars){
               leaf_c += orct_ptr->proba_fall_leaf<arma::vec>(
                 features.row(i), vars, leaf) * this->miss_class_cost(y(i), k) * vars[c_kt++];
-              // decided to use the ARMA_NO_DEBUG macro (TODO add to report)
+              // decided to use the ARMA_NO_DEBUG macro
             },
             [this, &leaf_c, &leaf, &y, &i, &k, &c_kt](
                 const OptimTraits::ADvector& vars){
@@ -180,8 +180,9 @@ OptimTraits::OptimFuns FdPot::create_mathematical_model(const arma::vec& y,
       (OptimTraits::ADvector& fg, const OptimTraits::ADvector& x) -> void
     {
     // objective function
-    // fg[0] = obj_function(x);
-     fg[0] = this->cost_func(x);
+    // fg[0] = this->cost_func(x);
+     fg[0] = this->obj_function(x);
+     
   
     // single class prediction per leaf constraints
     unsigned i = 1;  // constraint index
@@ -308,6 +309,7 @@ Rcpp::List FdPot::solve_trees(void){
   FdPotResults results(this->n_sols, orct_ptr->n_vars);
 
   std::vector<OptimHandler> optimhandlers(n_sols);
+  
   #pragma omp parallel for
   for (unsigned m = 0; m < n_sols; m++){
     optimhandlers[m] = OptimHandler(*(this->optimiser));
@@ -349,8 +351,8 @@ Rcpp::List FdPot::solve_trees(void){
     results.cost_func_vals(m) = CppAD::Value(this->cost_func(results.all_variables.col(m)));
       //CppAD::Value(*(this->cost_func)(cur_optim_hdler.variables));
 
-    //results.penalty_func_vals(m) = \
-      //CppAD::Value(this->penalty_func(cur_optim_hdler.variables));
+    results.penalty_func_vals(m) = \
+      CppAD::Value(this->penalty_func(vars_ad));
     
     results.obj_func_vals(m) =  cur_optim_hdler.solution.obj_value;
     Rcpp::checkUserInterrupt();  // check if the user has clicked stop

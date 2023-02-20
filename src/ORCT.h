@@ -120,35 +120,57 @@ struct ORCT{
    * 
    * @tparam VarT the variable type. In this library, two different types are used:
    * the ADdouble one (for CppAD compatibility for optimisation, see FdPot.cpp) and double for the 
-   * predict method (see TODO). 
+   * predict method 
    * enable_if could be used so that only these two types are used for template 
    * specialisation. For scalability it was not used.
    * 
    * @param feats the vector of the features for the statistical unit
    * @param vars the vector of all variables. Of
    * @param tau the node index (which node it is)
-   * // TODO enum or factory of functions for the distance
+   * 
    */ 
   template<typename VarVecT> 
   typename VarVecT::value_type proba_go_left(const arma::rowvec & feats, const VarVecT &vars,
                          unsigned tau) const; 
-  
+    /*! @brief computes the probability a statistical falls on a given leaf
+   * 
+   * Computes the probability a statistical unit will fall on a given leaf,
+   I.e. will follow a path of nodes that leads to such leaf
+   * 
+   * The features of the statistical unit (so in the functional case calculated ex ante)
+   * are needed, as well as the whole variables vector. Hence this method utilises the
+   * var_map (see var_map)
+   * 
+   * @tparam VarT the variable type. In this library, two different types are used:
+   * the ADdouble one (for CppAD compatibility for optimisation, see FdPot.cpp) and double for the 
+   * predict method 
+   * enable_if could be used so that only these two types are used for template 
+   * specialisation. For scalability it was not used.
+   * 
+   * @param feats the vector of the features for the statistical unit
+   * @param vars the vector of all variables. Of
+   * @param tau the leaf node index
+   * 
+   */ 
   template<typename VarVecT>
-  typename VarVecT::value_type proba_fall_leaf(const arma::rowvec&, const VarVecT & vars,
+  typename VarVecT::value_type proba_fall_leaf(const arma::rowvec&feats, const VarVecT & vars,
                            unsigned tau) const;
+  /*! @brief predict the labels (both probability and actual value)
   
-  Rcpp::List predict(const arma::mat&, const arma::vec& vars) const;
+  @param feats the features computed from the sample
+  @param the fitted variables after optimisation
+  @return an Rcpp list with probabilities of belonging to the labels and the labels with maximum probability
+  */
+  Rcpp::List predict(const arma::mat& coefs, const arma::vec& vars) const;
 
   
   
 };
 
-// TODO clarify why I did not use constexpr template for exp.
-
-
+// clarify why I did not use constexpr template for exp.
 
 template<typename VarVecT>
-typename VarVecT::value_type ORCT::proba_go_left(const arma::rowvec & feats,  // TODO if vec
+typename VarVecT::value_type ORCT::proba_go_left(const arma::rowvec & feats,  
                              const VarVecT & vars,unsigned tau) const{
   using VarT = typename VarVecT::value_type;
   VarT val = 0.;
@@ -167,7 +189,7 @@ typename VarVecT::value_type ORCT::proba_go_left(const arma::rowvec & feats,  //
     
   #endif
       
-  // TODO pragma
+  
   for (unsigned i = 0; i < feats.n_elem; i++){  // perform dot product
     val += feats(i) * (vars[var_idx++]);  // cannot use iterators with pragma (dependent)
   }
@@ -183,6 +205,13 @@ typename VarVecT::value_type ORCT::proba_go_left(const arma::rowvec & feats,  //
   
 }
 
+
+/*! @brief Probability the SU falls on a leaf
+
+@tparam VarVecT the type of the variable vector, in this project either arma::vec or OptimTraits::ADvector
+
+
+*/
 template<typename VarVecT>
 typename VarVecT::value_type ORCT::proba_fall_leaf(const arma::rowvec& feats,
                                           const VarVecT & vars,

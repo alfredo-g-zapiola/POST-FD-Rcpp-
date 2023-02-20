@@ -48,7 +48,7 @@ pFdorct <- function(y, X, basis.degree, depth = 2, alpha = .5, similarity.method
 #'
 #'@param
 #'
-predict.pFdorct <- function(model, X_fd_new){
+predict.pFdorct <- function(model, X_fd_new, result_idx){
   if (! class(model) == "p.fdorct")
     stop("model must be of p.fdorct class")
   if (! class(X_fd_new) == "fdSmooth"){
@@ -57,7 +57,7 @@ predict.pFdorct <- function(model, X_fd_new){
   if (X_fd_new$fd$basis$type != "bspline")
     stop("only the bspline basis type is supported")
   
-  return(predict_FdPot_Rcpp(model, X_fd_new$fd$coefs))
+  return(predict_FdPot_Rcpp(model, X_fd_new$fd$coefs, result_idx))
   
 }
 
