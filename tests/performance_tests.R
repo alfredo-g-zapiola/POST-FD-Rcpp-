@@ -64,7 +64,6 @@ plot(x=test_n, y=rationes2, col="red", type="b", main="Efficiency of Rcpp integr
 #====
 # load data
 # call microbenchmark NB CANNOT RUN SINCE R aborts it whenever num_threads > 1
-# Iif you want to run this, compile commenting out the -D PARALLEL option
 #in the Makevars
 #microbenchmark(
  # "compute_dissim_and_feats" = FdPot::test_case_compute_dissim_and_feats(X_coeffs=Xsp$fd$coefs,

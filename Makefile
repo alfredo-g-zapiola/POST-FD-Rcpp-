@@ -122,8 +122,6 @@ all: check clean
 .PHONY: all tests debugging
 .DEFAULT_GOAL: install
 
-install-cppad:
-	# git clone https://github.com/coin-or/CppAD.git cppad.git
 	
 install:
 	R -e "Rcpp::compileAttributes()"

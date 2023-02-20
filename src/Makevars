@@ -2,6 +2,7 @@
 CPPAD_LIB_DIR ?= /usr/local/lib/ # the default directory 
 PACS_ROOT ?= /home/alfredo/Documents/Polimi/PACS/pacs-examples/Examples
 mkOpenBlasLib ?= # see INSTALL, you can leave it blank
+IPOPT_LIB_DIR ?= /usr/bin/ipopt
 
 ## The following lines were created automatically by Rcpp
 ## With R 3.1.0 or later, you can uncomment the following line to tell R to 
@@ -31,7 +32,7 @@ OPENBLAS_LIBS = -L${mkOpenBlasLib} -lopenblas
 
 # iv. Cppad
 
-CPPAD_LIB =  -L$(CPPAD_LIB_DIR)  -Wl,-rpath,$(CPPAD_LIB_DIR) -lcppad_lib -lcppad_ipopt -lipopt 
+CPPAD_LIB =  -L$(CPPAD_LIB_DIR)  -Wl,-rpath,$(CPPAD_LIB_DIR)  -L$(IPOPT_LIB_DIR) -Wl,-rpath,$(IPOPT_LIB_DIR) -lcppad_lib -lcppad_ipopt -lipopt 
 
 
 
