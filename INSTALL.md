@@ -13,8 +13,9 @@ I recommend you perform the  `git clone ` command in the working directory of th
   * Follow the instructions on the README.md file to compile and create the .so of the baseVersion
   **Nota bene**: you will need to have the [OpenBlas lib](https://github.com/xianyi/OpenBLAS/wiki/Installation-Guide) installed beforehand.
   
-4. Go to `.src/Makevars` and set the following variables:
-* CPPAD_LIB_DIR with the directory where the .so file of cppad was installed.
+4. Go to `.src/Makevars` and set the first variables that are signalled to be edited
+* CPPAD_LIB_DIR with the directory where the .so file of cppad was installed; CPPAD_INC_DIR for its header files
+* IPOPT_LIB_DIR for the .so file of ipopt; IPOPT_INC_DIR for its headers.
 * PACS_ROOT the path we saw at the pacs course, i.e. if you clone the repo here[https://github.com/pacs-course/pacs-examples], its path so that you are inside the `Examples` folder.
 * mkOpenBlasLib the path to the library OpenBlas (however this is usually on the directories where programs are regularly installed and you should not need to add it.)
 <br> 
