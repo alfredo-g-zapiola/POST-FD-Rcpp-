@@ -3,7 +3,7 @@ CPPAD_INC_DIR ?=
 CPPAD_LIB_DIR ?= /usr/local/lib/ # the default directory 
 PACS_ROOT ?= /home/alfredo/Documents/Polimi/PACS/pacs-examples/Examples
 mkOpenBlasLib ?= # see INSTALL, you can leave it blank
-IPOPT_LIB_DIR ?= /usr/bin/ipopt
+IPOPT_LIB_DIR ?= /usr/lib/
 IPOPT_INC_DIR ?= /usr/include/coin-or/
 
 ## The following lines were created automatically by Rcpp

@@ -6,7 +6,7 @@ Assuming you have already installed R on your system (and also R studio, preferr
 <br>
 I recommend you perform the  `git clone ` command in the working directory of this project, since you might have to modify the -I directive in the `src/Makevars` file otherwise.
 <br>
-**Important: remember to add the option `-D include_ipopt=true` at step 2**, see [here]{https://www.coin-or.org/CppAD/Doc/ipopt_prefix.htm}, else you will get a missing header file..
+If you can, to add the option `-D include_ipopt=true` at step 2, see [here]{https://www.coin-or.org/CppAD/Doc/ipopt_prefix.htm}, else remember to modify the `Makevars` file as stated below.
 
 3. Compile and install the quadrature library provided by **pacs-examples** (see the repo for requirements)
   * Go to `$(PACS_ROOT)/src/QuadratuleRule 
@@ -24,9 +24,15 @@ If you do not like editing the `Makevars` file,, you can do the following:
     * Run `R -e "R.home()"` to find the value of R_HOME
     * Go to **R_HOME/etc/Renviron** and set the variables there.
 5. Go into the `inst/` directory and clone [this repo]{https://github.com/gcant/dirichlet-cpp/tree/4023dc18599a621c7452caf8be16494dcc00ee2a}, and go back to the directory of FdPot (inside FdPot, outside inst/)
-6. Now, you can run `make install` to install the package
+6. Install the R dependencies: open R (preferrably in R studio) and run the following commands:
+* `install.packages("fda")`
+* `install.packages("Rcpp")`
+* `install.packages("RcppArmadillo")`
+* `install.packages("splines2")`
 
-7. You are all set, open `R` and to load the library> `library(FdPot)`
+7. Now, you can run `make install` to install the package
+
+8. You are all set, open `R` and to load the library> `library(FdPot)`
 
 8. Run `?FdPot` for help
 
